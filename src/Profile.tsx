@@ -2,8 +2,9 @@ import React from "react";
 import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
 import Chart from "react-google-charts";
 import css from './Profile.module.css';
-import { makeStyles } from '@material-ui/core/styles';
-const useStyles = makeStyles({
+/*import { makeStyles } from '@material-ui/core/styles';*/
+
+/*const useStyles = makeStyles({
     root: {
         background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
         border: 0,
@@ -12,53 +13,47 @@ const useStyles = makeStyles({
         color: 'white',
         padding: '0 30px',
     },
-});
+    /!*card:{
+      backgroundColor: "grey",
+      display: 'flex',
+      align-items:center
+    },*!/
+});*/
 
 function UserCard() {
-    const classes = useStyles();
+    /*const classes = useStyles();*/
     return (
-        <Card className={classes.root}>
+        <Card className={css.card}>
             <Grid container spacing={3}>
-                <CardContent>
-                    <Grid item xs={6}>
-                        {/*Photo*/}
-                        <CardMedia
-                            className={""}
-                            image={"https://img5.goodfon.ru/wallpaper/nbig/4/54/stefan-koidl-by-stefan-koidl-sky-dragon.jpg"}/>
-                    </Grid>
-                    <Grid item xs={6}>
-                        {/*Dolzhnost*/}
-                        <Typography>
-                            Valera
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        {/*FIO*/}
-                        <Typography>
-                            Valera
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        {/*Integralnoe znacenie*/}
-                        <Typography>
-                            Valera
-                        </Typography>
-                        {/*Znacenie*/}
-                        <Typography>
-                            Valera
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        {/*Ispolnitelnaya disciplina*/}
-                        <Typography>
-                            Valera
-                        </Typography>
-                        {/*Pokazateli*/}
-                        <Typography>
-                            Valera
-                        </Typography>
-                    </Grid>
-                </CardContent>
+                <Grid item xl={12}>
+                    {/*Position*/}
+                    <Typography  className={css.position} variant='h4' component='h3' >Проректор по воспитательной деятельности</Typography>
+                </Grid>
+                <Grid item>
+                    {/*Photo*/}
+                    <CardMedia className={css.photo}
+                               image={"https://img5.goodfon.ru/wallpaper/nbig/4/54/stefan-koidl-by-stefan-koidl-sky-dragon.jpg"}/>
+                </Grid>
+                <div className={css.details}>
+                    <CardContent>
+                        <Grid item>
+                            {/*FIO*/}
+                            <Typography>Иванов Иван Иванович</Typography>
+                        </Grid>
+                        <Grid item xl={6}>
+                            {/*Integralnoe znacenie*/}
+                            <Typography>Интегральное значение</Typography>
+                            {/*Znacenie*/}
+                            <Typography>40%</Typography>
+                        </Grid>
+                        <Grid item xl={6}>
+                            {/*Ispolnitelnaya disciplina*/}
+                            <Typography>Исполнительная дисциплина</Typography>
+                            {/*Pokazateli*/}
+                            <Typography>20%</Typography>
+                        </Grid>
+                    </CardContent>
+                </div>
             </Grid>
         </Card>
     );
@@ -124,20 +119,20 @@ function KPEDynamicTableQuarter() {
 }
 
 function Profile() {
-return (
-    <Grid container spacing={3}>
-        <Grid item xs={12}>
-            <UserCard/>
+    return (
+        <Grid container spacing={3}>
+            <Grid item xs={12}>
+                <UserCard/>
+            </Grid>
+            <Grid item xs={6}>
+                <KPETableCurrentDate/>
+            </Grid>
+            <Grid item xs={6}>
+                <KPEDynamicTableQuarter/>
+            </Grid>
         </Grid>
-        <Grid item xs={6}>
-            <KPETableCurrentDate />
-        </Grid>
-        <Grid item xs={6}>
-            <KPEDynamicTableQuarter/>
-        </Grid>
-    </Grid>
-)
-;
+    )
+        ;
 
 }
 
