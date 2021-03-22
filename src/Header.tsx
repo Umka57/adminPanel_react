@@ -46,9 +46,9 @@ function ProrectorsMenu() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const prorectors = () => {
+    /*const prorectors = () => {
         let prorectors:Array = LoadData("")
-    }
+    }*/
     return (
         <div>
             <Button aria-controls="prorectors-menu" aria-haspopup="true" onClick={handleClick}>
