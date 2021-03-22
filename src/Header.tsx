@@ -10,7 +10,7 @@ import {Typography} from "@material-ui/core";
 // Import NavLink from react-router lib
 import {NavLink} from "react-router-dom";
 
-function LoadData( queryLink:RequestInfo){
+/*function LoadData( queryLink:RequestInfo){
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -35,7 +35,7 @@ function LoadData( queryLink:RequestInfo){
             )
     }, [])
     return items
-}
+}*/
 function ProrectorsMenu() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
