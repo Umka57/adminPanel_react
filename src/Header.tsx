@@ -61,7 +61,7 @@ function ProrectorsMenu() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}><NavLink to={`/prorectors/${asdasd}`}>{}</NavLink></MenuItem>
+                <MenuItem onClick={handleClose}>{/*<NavLink to={`/prorectors/${asdasd}`}>{}</NavLink>*/}</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
             </Menu>
