@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 // Import Material UI components
 import AppBar from "@material-ui/core/AppBar"
@@ -7,7 +7,35 @@ import Toolbar from "@material-ui/core/Toolbar"
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import {Typography} from "@material-ui/core";
+// Import NavLink from react-router lib
+import {NavLink} from "react-router-dom";
 
+function LoadData( queryLink:RequestInfo){
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [items, setItems] = useState([]);
+
+    // Примечание: пустой массив зависимостей [] означает, что
+    // этот useEffect будет запущен один раз
+    // аналогично componentDidMount()
+    useEffect(() => {
+        fetch(queryLink)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setItems(result);
+                },
+                // Примечание: важно обрабатывать ошибки именно здесь, а не в блоке catch(),
+                // чтобы не перехватывать исключения из ошибок в самих компонентах.
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+    }, [])
+    return items
+}
 function ProrectorsMenu() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -18,7 +46,9 @@ function ProrectorsMenu() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    const prorectors = () => {
+        let prorectors:Array = LoadData("")
+    }
     return (
         <div>
             <Button aria-controls="prorectors-menu" aria-haspopup="true" onClick={handleClick}>
@@ -31,7 +61,7 @@ function ProrectorsMenu() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}> <a href={'/prorectors'}>Profile</a></MenuItem>
+                <MenuItem onClick={handleClose}><NavLink to={`/prorectors/${asdasd}`}>{}</NavLink></MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={handleClose}>Logout</MenuItem>
             </Menu>
@@ -106,9 +136,7 @@ function Header(){
                 <Typography className="h1">
                     Мгуту Статистика
                 </Typography>
-                <Button>
-                    Пользователи
-                </Button>
+                <Button><a href={'/users'}>Пользователи</a></Button>
                 <ProrectorsMenu/>
                 <UniversityMenu/>
                 <StructuresMenu/>

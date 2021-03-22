@@ -1,7 +1,7 @@
 import React from "react";
-import { DataGrid } from '@material-ui/data-grid';
+import {DataGrid, GridColDef, GridRowsProp} from '@material-ui/data-grid';
 
-const columns = [
+const columns:GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'firstName', headerName: 'First name', width: 130 },
     { field: 'lastName', headerName: 'Last name', width: 130 },
@@ -9,7 +9,7 @@ const columns = [
     {field: 'fullName', headerName: 'Full name', description: 'This column has a value getter and is not sortable.', width: 160,},
 ];
 
-const rows = [
+const rows: GridRowsProp = [
     { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
     { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
     { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
@@ -23,14 +23,14 @@ const rows = [
 
 function DataTable() {
     return (<div style={{ height: 400, width: '100%' }}>
-    <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+    <DataGrid rows={rows} columns={columns} />
     </div>
-);
+    );
 }
 
 function Users(){
     return(
-        DataTable
+        <DataTable/>
     );
 }
 export default Users;
