@@ -1,16 +1,23 @@
 import React from "react";
+//Библиотка для отправки http запросов
+import axios from 'axios'
+//Импорт элементов из библиотеки Material Ui
 import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
+//Импорт библиоткеки для создания графиков
 import Chart from "react-google-charts";
+//Импорт css модуля для стилизации объектов
 import css from './Profile.module.css';
 
+
 function UserCard() {
+
     /*const classes = useStyles();*/
     return (
         <Card className={css.card}>
             <Grid container spacing={3}>
                 <Grid item xl={12}>
                     {/*Position*/}
-                    <Typography  className={css.position} variant='h4' component='h3' >Проректор по воспитательной деятельности</Typography>
+                    <Typography  className={css.position} variant='h4' component='h3' >{}</Typography>
                 </Grid>
                 <Grid item>
                     {/*Photo*/}
@@ -101,22 +108,35 @@ function KPEDynamicTableQuarter() {
     );
 }
 
-function Profile() {
-    return (
-        <Grid container spacing={3}>
-            <Grid item xs={12}>
-                <UserCard/>
-            </Grid>
-            <Grid item xs={6}>
-                <KPETableCurrentDate/>
-            </Grid>
-            <Grid item xs={6}>
-                <KPEDynamicTableQuarter/>
-            </Grid>
-        </Grid>
-    )
-        ;
+export default class Profile extends React.Component{
+    state = {
+        test:String
+    }
 
+    componentDidMount() {
+        var config = { headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'}
+        }
+        axios.get(`http://localhost:3000/timestamp`, config)
+            .then(res => {
+                this.setState({persons: res.data})
+            });
+    }
+    render() {
+        return (
+            <Grid container spacing={3}>
+                <Grid item xs={12}>
+                    {this.state.test}
+                    <UserCard/>
+                </Grid>
+                <Grid item xs={6}>
+                    <KPETableCurrentDate/>
+                </Grid>
+                <Grid item xs={6}>
+                    <KPEDynamicTableQuarter/>
+                </Grid>
+            </Grid>
+        )
+    }
 }
-
-export default Profile;

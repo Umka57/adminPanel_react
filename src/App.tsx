@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from "./Header/Header";
+import Header from "./Components/Header/Header";
 import {BrowserRouter, Route} from "react-router-dom"
-import Profile from "./Profile/Profile";
-import Users from "./UsersPage/UsersPage";
+import Profile from "./Components/Profile/Profile";
+import Users from "./Components/UsersPage/UsersPage";
 function App() {
     return (
         <BrowserRouter>
