@@ -1,0 +1,8 @@
+{
+    "database_name": "vuzcontrol",
+    "database_host": "176.118.165.209",
+    "database_port": "5432",
+    "database_username": "misha",
+    "database_password": "misha",
+    "AUTH_SALT": "0613a4e01ca62c45ec18267d18288451f0101b29f9fd6ccf2fe92363555fcaa6"
+}
