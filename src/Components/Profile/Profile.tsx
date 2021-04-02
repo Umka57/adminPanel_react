@@ -7,6 +7,7 @@ import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core"
 import Chart from "react-google-charts";
 //Импорт css модуля для стилизации объектов
 import css from './Profile.module.css';
+import {getProrectors, getStruct, getUserData} from "../../api";
 
 
 function UserCard() {
@@ -17,7 +18,7 @@ function UserCard() {
             <Grid container spacing={3}>
                 <Grid item xl={12}>
                     {/*Position*/}
-                    <Typography  className={css.position} variant='h4' component='h3' >{}</Typography>
+                    <Typography  className={css.position} variant='h4' component='h3' ></Typography>
                 </Grid>
                 <Grid item>
                     {/*Photo*/}
@@ -110,24 +111,18 @@ function KPEDynamicTableQuarter() {
 
 export default class Profile extends React.Component{
     state = {
-        test:String
+        person:[]
     }
 
     componentDidMount() {
-        var config = { headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'}
-        }
-        axios.get(`http://localhost:3000/timestamp`, config)
-            .then(res => {
-                this.setState({persons: res.data})
-            });
+        getUserData().then(response => {
+
+        });
     }
     render() {
         return (
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    {this.state.test}
                     <UserCard/>
                 </Grid>
                 <Grid item xs={6}>
