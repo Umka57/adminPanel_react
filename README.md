@@ -7,16 +7,16 @@
 ### get
 | Option | Type |
 | ------:| -----------:|
-| destinationId   | int 
+|destinationId|int
 
 ### getPossible
 | Option | Type |
 | ------:| -----------:|
-| userId   | int 
+|userId|int
 
 ### getValues
 | Option | Type |
 | ------:| -----------:|
-| destinationId   | int 
+|destinationId|int
 
 ---
