@@ -1,5 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {DataGrid, GridColDef, GridRowsProp} from '@material-ui/data-grid';
+import {useTypedSelector} from "../../Hooks/useTypeSelector";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchUsers} from "../../Store/ActionCreator/user";
+import {useActions} from "../../Hooks/useActions";
 
 const columns:GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -9,28 +13,29 @@ const columns:GridColDef[] = [
     {field: 'fullName', headerName: 'Full name', description: 'This column has a value getter and is not sortable.', width: 160,},
 ];
 
-const rows: GridRowsProp = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+const UsersTable: React.FC = () => {
+    const {users,error,loading} = useTypedSelector(state => state.user)
+    const {fetchUsers} = useActions()
+    
+    useEffect(()=>{
+        fetchUsers()
+    },[])
 
-function DataTable() {
+    if(loading){
+        //LOADING
+    }
+    if(error){
+        //ERROR
+    }
     return (<div style={{ height: 400, width: '100%' }}>
-    <DataGrid rows={rows} columns={columns} />
+    <DataGrid rows={users} columns={columns} />
     </div>
     );
 }
 
 function Users(){
     return(
-        <DataTable/>
+        <UsersTable/>
     );
 }
 export default Users;
