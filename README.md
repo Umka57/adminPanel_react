@@ -1,19 +1,22 @@
 # API MANUAL
+
 ---
+
 ## destinations
 
 ### get
-[
-    destinationId: int
-]
+| Option | Type |
+| ------:| -----------:|
+| destinationId   | int 
 
 ### getPossible
-[
-    userId : int
-]
+| Option | Type |
+| ------:| -----------:|
+| userId   | int 
 
 ### getValues
-[
-    destinationId: int
-]
+| Option | Type |
+| ------:| -----------:|
+| destinationId   | int 
+
 ---
