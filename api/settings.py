@@ -1,5 +1,6 @@
 from collections import namedtuple
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, validator
+from pydantic.class_validators import root_validator
 
 CONFIG_PATH = "./config.json"
 
@@ -21,4 +22,30 @@ class DestinationsGetPossibleInputData(BaseModel):
     user_id: int = Field(alias="userId")
 
 
+class UsersGetPossibleInputData(BaseModel):
+    position_id: int = Field(None, alias="positionId")
+    role_id: int = Field(None, alias="roleId")
+
+    @validator(position_id, check_fields=False)
+    def position_id_validator(cls, v: int) -> int:
+        if v is None:
+            raise ValueError(f"Cannot set {cls.position_id} to None")
+
+        return int(v)
+
+    @validator(role_id, check_fields=False)
+    def role_id_validator(cls, v: int) -> int:
+        if v is None:
+            raise ValueError(f"Cannot set {cls.position_id} to None")
+
+        return int(v)
+
+
+class UsersGetInputData(BaseModel):
+    user_id: int = Field(alias="userId")
+
+
 ProfilePageData = namedtuple("ProfilePageData", "users rectors")
+
+ANSWER_ERROR = dict(response=0)
+ANSWER_RIGHT = dict(response=1)

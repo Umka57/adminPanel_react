@@ -10,16 +10,44 @@
 ### get
 | Option | Type |
 | ------:| -----------:|
-|destinationId|int|
+|destinationId*|int|
 
 ### getPossible
 | Option | Type |
 | ------:| -----------:|
-|userId|int|
+|userId*|int|
 
 ### getValues
 | Option | Type |
 | ------:| -----------:|
-|destinationId|int|
+|destinationId*|int|
+
+---
+
+## users
+
+### get
+| Option | Type |
+| ------:| -----------:|
+|userId*|int|
+
+### getPossible
+| Option | Type |
+| ------:| -----------:|
+|positionId?|int|
+|roleId?|int|
+
+---
+
+## positions
+
+
+### getPossible
+---
+
+## roles
+
+
+### getPossible
 
 ---
