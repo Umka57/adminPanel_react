@@ -1,5 +1,17 @@
+interface Destination {
+    id: number,
+    name: string,
+    percent_completion: string,
+    performance_indicator: string,
+    plan: string,
+    present_value: string,
+    user: number,
+    verification_indicator_value: string,
+    year: number
+}
+
 export interface DestinationsState {
-    destinations: any[],
+    destinations: Destination[],
     loading: boolean,
     error: null | string,
     userId: null | number

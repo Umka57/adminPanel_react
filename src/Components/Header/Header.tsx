@@ -42,9 +42,9 @@ const ProrectorsMenu: React.FC = () => {
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >{prorectors.map(prorector =>
-                <MenuItem key={prorector.id} onClick={handleClose}><NavLink to={`/prorectors${prorector.id}`}>{prorector.transform_name}</NavLink></MenuItem>
+                onClose={handleClose}>
+                {prorectors.map(prorector =>
+                <MenuItem key={prorector.id} onClick={handleClose}><NavLink to={`/prorectors${prorector.id}`}>{prorector.lastname}{prorector.name.substr(0,1)}.{prorector.patronymic.substr(0,1)}</NavLink></MenuItem>
                 )}
             </Menu>
         </div>
@@ -91,6 +91,12 @@ function StructuresMenu(){
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const {structure,loading,error} = useTypedSelector(state => state.struct)
+    const {fetchStructure} = useActions()
+
+    useEffect(()=> {
+        fetchStructure()
+    },[])
 
     return(
         <div>
@@ -104,9 +110,9 @@ function StructuresMenu(){
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                {structure.map(struct =>
+                    <MenuItem onClick={handleClose}><NavLink to={`/structure${struct.id}`}>{struct.transform_name}</NavLink></MenuItem>
+                )}
             </Menu>
         </div>
     );

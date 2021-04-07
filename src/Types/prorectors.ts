@@ -1,5 +1,16 @@
+interface Prorectors {
+    id: number,
+    lastname: string,
+    name: string ,
+    patronymic: string,
+    telephone: string,
+    email: string,
+    position: number,
+    role: number
+}
+
 export interface ProrectorsState {
-    prorectors: any[],
+    prorectors: Prorectors[],
     loading: boolean,
     error: null | string,
 }

@@ -2,11 +2,13 @@ import {combineReducers} from "redux";
 import {userReducer} from "./userReducer";
 import {destinationsReducer} from "./destinationsReducer";
 import {prorectorsReducer} from "./prorectorsReducer";
+import {structureReducer} from "./structureReducer";
 
-export const rootReducer= combineReducers({
+export const rootReducer = combineReducers({
     user: userReducer,
     destinations : destinationsReducer,
-    prorectors: prorectorsReducer
+    prorectors: prorectorsReducer,
+    struct: structureReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
