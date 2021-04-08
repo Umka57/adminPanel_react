@@ -13,7 +13,7 @@ export const getProrectors = (positionId = 2,roleId= 2) => {
 }
 
 export const getStruct = (position = 3,role= 2) => {
-    return instance.post("/users.getPossible",{positionId: position,roleId: role}).then(response => {return response.data})
+    return instance.post("/users.getPossible",this.props).then(response => {return response.data})
 }
 
 export const getUsers = (positionId = 0,roleId= 0) => {

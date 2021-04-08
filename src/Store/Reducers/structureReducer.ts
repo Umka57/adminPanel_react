@@ -3,7 +3,7 @@ import {StructureAction, StructureActionTypes, StructureState} from "../../Types
 const initialState: StructureState = {
     structure : [],
     loading: false,
-    error: null,
+    error: null
 }
 
 export const structureReducer = (state = initialState, action: StructureAction) => {
@@ -14,5 +14,7 @@ export const structureReducer = (state = initialState, action: StructureAction) 
             return {...state, loading: false, structure:action.payload}
         case StructureActionTypes.FETCH_STRUCTURE_ERROR:
             return {...state, loading: false, error: action.payload}
+        default:
+            return state
     }
 }

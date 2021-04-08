@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 
 // Import Material UI components
 import AppBar from "@material-ui/core/AppBar"
@@ -10,9 +10,7 @@ import {Typography} from "@material-ui/core";
 
 // Import NavLink from react-router lib
 import {NavLink} from "react-router-dom";
-import {getProrectors, getStruct} from "../../api";
 import {useTypedSelector} from "../../Hooks/useTypeSelector";
-import {stat} from "fs";
 import {useActions} from "../../Hooks/useActions";
 
 const ProrectorsMenu: React.FC = () => {
@@ -32,6 +30,7 @@ const ProrectorsMenu: React.FC = () => {
     useEffect(()=> {
         fetchProrectors()
     },[])
+
     return (
         <div>
             <Button aria-controls="prorectors-menu" aria-haspopup="true" onClick={handleClick}>
@@ -91,7 +90,8 @@ function StructuresMenu(){
     const handleClose = () => {
         setAnchorEl(null);
     };
-    const {structure,loading,error} = useTypedSelector(state => state.struct)
+
+    const {structure,loading,error} = useTypedSelector(state => state.structure)
     const {fetchStructure} = useActions()
 
     useEffect(()=> {
@@ -111,7 +111,7 @@ function StructuresMenu(){
                 onClose={handleClose}
             >
                 {structure.map(struct =>
-                    <MenuItem onClick={handleClose}><NavLink to={`/structure${struct.id}`}>{struct.transform_name}</NavLink></MenuItem>
+                    <MenuItem onClick={handleClose}><NavLink to={`/structure${struct.id}`}>{struct.lastname}{struct.name.substr(0,1)}.{struct.patronymic.substr(0,1)}</NavLink></MenuItem>
                 )}
             </Menu>
         </div>

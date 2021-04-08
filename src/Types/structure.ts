@@ -17,7 +17,7 @@ export interface StructureState {
 export enum StructureActionTypes {
     FETCH_STRUCTURE = "FETCH_STRUCTURE",
     FETCH_STRUCTURE_SUCCESS = "FETCH_STRUCTURE-SUCCESS",
-    FETCH_STRUCTURE_ERROR = "FETCH_STRUCTURE-ERROR"
+    FETCH_STRUCTURE_ERROR = "FETCH_STRUCTURE-ERROR",
 }
 
 interface FetchStructureAction {
@@ -26,12 +26,12 @@ interface FetchStructureAction {
 
 interface FetchStructureSuccessAction{
     type: StructureActionTypes.FETCH_STRUCTURE_SUCCESS;
-    payload: any[]
+    payload: Structure[]
 }
 
 interface FetchStructuresErrorAction {
     type: StructureActionTypes.FETCH_STRUCTURE_ERROR;
-    payload: string
+    payload: string;
 }
 
 export type StructureAction = FetchStructureAction | FetchStructureSuccessAction | FetchStructuresErrorAction

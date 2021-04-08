@@ -8,7 +8,7 @@ export const rootReducer = combineReducers({
     user: userReducer,
     destinations : destinationsReducer,
     prorectors: prorectorsReducer,
-    struct: structureReducer
+    structure: structureReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>
