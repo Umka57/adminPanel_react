@@ -28,7 +28,7 @@ interface FetchDestinationsAction {
 }
 interface FetchDestinationsSuccessAction {
     type: DestinationsActionTypes.FETCH_DESTINATIONS_SUCCESS;
-    payload: any[];
+    payload: Destination[];
 }
 interface FetchDestinationsErrorAction {
     type: DestinationsActionTypes.FETCH_DESTINATIONS_ERROR;

@@ -1,12 +1,12 @@
 interface Structure {
+    email: string,
     id: number,
     lastname: string,
     name: string ,
     patronymic: string,
-    telephone: string,
-    email: string,
     position: number,
     role: number
+    telephone: string,
 }
 export interface StructureState {
     structure: Structure[],
@@ -26,7 +26,7 @@ interface FetchStructureAction {
 
 interface FetchStructureSuccessAction{
     type: StructureActionTypes.FETCH_STRUCTURE_SUCCESS;
-    payload: Structure[]
+    payload: any[]
 }
 
 interface FetchStructuresErrorAction {
