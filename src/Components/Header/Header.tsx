@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 
 // Import Material UI components
 import AppBar from "@material-ui/core/AppBar"
@@ -10,31 +10,31 @@ import {Typography} from "@material-ui/core";
 
 // Import NavLink from react-router lib
 import {NavLink} from "react-router-dom";
-import {getProrectors, getStruct} from "../../api";
 import {useTypedSelector} from "../../Hooks/useTypeSelector";
-import {stat} from "fs";
 import {useActions} from "../../Hooks/useActions";
 
+import css from "./Header.module.css"
+
 const ProrectorsMenu: React.FC = () => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
     const {prorectors,loading,error} = useTypedSelector(state => state.prorectors)
     const {fetchProrectors} = useActions()
 
     useEffect(()=> {
         fetchProrectors()
     },[])
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+
+    };
+
     return (
         <div>
-            <Button aria-controls="prorectors-menu" aria-haspopup="true" onClick={handleClick}>
+            <Button aria-controls="prorectors-menu" aria-haspopup="true" onClick={handleClick} className={css.menu__navlink}>
                 Проректора
             </Button>
             <Menu
@@ -42,9 +42,9 @@ const ProrectorsMenu: React.FC = () => {
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >{prorectors.map(prorector =>
-                <MenuItem key={prorector.id} onClick={handleClose}><NavLink to={`/prorectors${prorector.id}`}>{prorector.transform_name}</NavLink></MenuItem>
+                onClose={handleClose}>
+                {prorectors.map(prorector =>
+                <MenuItem key={prorector.id} onClick={handleClose}><NavLink className={css.navlink} to={`/prorectors${prorector.id}`}>{prorector.lastname} {prorector.name.substr(0,1)}.{prorector.patronymic.substr(0,1)}</NavLink></MenuItem>
                 )}
             </Menu>
         </div>
@@ -64,10 +64,11 @@ function UniversityMenu(){
 
     return(
         <div>
-            <Button aria-controls="university-menu" aria-haspopup="true" onClick={handleClick}>
+            <Button aria-controls="university-menu" aria-haspopup="true" onClick={handleClick} className={css.menu__navlink}>
                 Университеты
             </Button>
             <Menu
+
                 id="university-menu"
                 anchorEl={anchorEl}
                 keepMounted
@@ -92,21 +93,25 @@ function StructuresMenu(){
         setAnchorEl(null);
     };
 
+    const {structure,loading,error} = useTypedSelector(state => state.structure)
+    const {fetchStructure} = useActions()
+
+    useEffect(()=> {
+        if(!structure.length){
+            fetchStructure()
+        }
+    },[])
+
+    console.log("ass",structure)
     return(
         <div>
-            <Button aria-controls="structures-menu" aria-haspopup="true" onClick={handleClick}>
+            <Button aria-controls="structures-menu" aria-haspopup="true" onClick={handleClick} className={css.menu__navlink}>
                 Структурные
             </Button>
-            <Menu
-                id="structures-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <Menu id="structures-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                {structure.map(struct =>
+                    <MenuItem onClick={handleClose}><NavLink className={css.navlink} to={`/structure${struct.id}`}>{struct.lastname} {struct.name.substr(0,1)}.{struct.patronymic.substr(0,1)}</NavLink></MenuItem>
+                )}
             </Menu>
         </div>
     );

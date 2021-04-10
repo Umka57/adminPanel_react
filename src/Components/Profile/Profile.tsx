@@ -110,15 +110,6 @@ function KPEDynamicTableQuarter() {
 }
 
 export default class Profile extends React.Component{
-    state = {
-        person:[]
-    }
-
-    componentDidMount() {
-        getUserData().then(response => {
-
-        });
-    }
     render() {
         return (
             <Grid container spacing={3}>

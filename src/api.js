@@ -7,27 +7,31 @@ const instance = axios.create({
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'}
 })
-export const getProrectors = (props) => {
-    return instance.post("/prorectors", this.props).then(response => {return response.data})
+
+export const getProrectors = (position = 2,role= 2) => {
+    return instance.get("/users.getPossible", {positionId:position ,roleId:role})
 }
 
-export const getStruct = (props) => {
-    return instance.post("/structs", this.props).then(response => {return response.data})
+export const getStruct = (position = 3,role= 2) => {
+    return instance.post("/users.getPossible",{positionId:position ,roleId:role})
 }
 
-export const getUsers = (props) => {
-    return instance.post("/users",this.props).then(response => {return response.data})
+export const getUsers = (positionId = 0,roleId= 0) => {
+    return instance.post("/users.getPossible",this.props)
 }
 
 export const getUserData = (props) => {
     return instance.post("/userdata", this.props).then(response => {return response.data})
 }
+
 export const destinationsGetPossible = (props) => {
     return instance.post("/destinations.getPossible", this.props).then(response => {return response.data})
 }
+
 export const destinationsGetValues = (props) => {
     return instance.post("/destinations.getValues", this.props).then(response => {return response.data})
 }
+
 export const DestinationsGet = (props) => {
     return instance.post("/destinations.get", this.props).then(response => {return response.data})
 }

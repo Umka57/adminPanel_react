@@ -1,5 +1,16 @@
+interface User {
+    id: number,
+    lastname: string,
+    name: string ,
+    patronymic: string,
+    telephone: string,
+    email: string,
+    position: number,
+    role: number
+}
+
 export interface UserState{
-    users:any[];
+    users:User[];
     loading:boolean;
     error:null | string;
 }
