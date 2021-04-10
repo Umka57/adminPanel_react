@@ -13,10 +13,7 @@ function App() {
             <Header/>
             {/*<Route path='/main' component={}/>*/}
             <Route path='/users' component={Users}/>
-            <Route path='/prorectors' component={Profile}/>
-            <Route path='/struct' component={Profile}/>
-            <Route path='/university' /*component={}*//>
-            <Route path='/employee' component={Profile}/>
+            <Route path='/user/:id' component={Profile}/>
         </BrowserRouter>
         </Provider>
 );

@@ -2,35 +2,34 @@ import React, {useEffect} from "react";
 import {DataGrid, GridColDef, GridRowsProp} from '@material-ui/data-grid';
 import {useTypedSelector} from "../../Hooks/useTypeSelector";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchUsers} from "../../Store/ActionCreator/user";
+import {fetchUsers} from "../../Store/ActionCreator/users";
 import {useActions} from "../../Hooks/useActions";
 
 const columns:GridColDef[] = [
-    { field: 'email', headerName: 'email', width: 70 },
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
-    { field: 'name', headerName: 'name', width: 130 },
+    { field: 'lastname', headerName: 'Фамилия', width: 130 },
+    { field: 'name', headerName: 'Имя', width: 130 },
     { field: 'patronymic', headerName: 'Отчество', width: 130 },
-    { field: 'position', headerName: 'Отчество', width: 130 },
-    { field: 'role', headerName: 'Отчество', width: 130 },
-    {field: 'telephone', headerName: 'telephone', width: 90,},
+    { field: 'email', headerName: 'Почта', width: 130 },
+    {field: 'telephone', headerName: 'Телефон', width: 130,},
+    { field: 'position', headerName: 'Должность', width: 130 },
+    { field: 'role', headerName: 'Роль', width: 130 }
 ];
 
 const UsersTable: React.FC = () => {
-    const {users,error,loading} = useTypedSelector(state => state.user)
-    const {fetchUsers} = useActions()
+    const {users,error_user,loading_user} = useTypedSelector(state => state.user)
+    const {roles,error_roles,loading_roles} = useTypedSelector(state => state.roles)
+    const {positions,error_positions,loading_positions} = useTypedSelector(state => state.positions)
+
+    const {fetchUsers,fetchRoles,fetchPositions} = useActions()
     
     useEffect(()=>{
         fetchUsers()
-        console.log(users)
+        fetchRoles()
+        fetchPositions()
     },[])
 
-    if(loading){
-        //LOADING
-    }
-    if(error){
-        //ERROR
-    }
+   /* user.map{user=> user.position = {}}*/
     return (<div style={{ height: 400, width: '100%' }}>
     <DataGrid rows={users} columns={columns} />
     </div>

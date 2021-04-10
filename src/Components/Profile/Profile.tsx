@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 //Библиотка для отправки http запросов
 import axios from 'axios'
 //Импорт элементов из библиотеки Material Ui
@@ -8,44 +8,50 @@ import Chart from "react-google-charts";
 //Импорт css модуля для стилизации объектов
 import css from './Profile.module.css';
 import {getProrectors, getStruct, getUserData} from "../../api";
+import {useParams} from "react-router-dom"
+import {useTypedSelector} from "../../Hooks/useTypeSelector";
+import {useActions} from "../../Hooks/useActions";
 
+const UserCard: React.FC = () =>  {
+    const {id} = useParams<any>()
+    const {users,loading_user,error_user} = useTypedSelector(state => state.user)
+    const {positions,loading_positions,error_positions} = useTypedSelector(state => state.positions)
 
-function UserCard() {
-
-    /*const classes = useStyles();*/
+    console.log(users)
     return (
         <Card className={css.card}>
+            {users.map(user =>
             <Grid container spacing={3}>
                 <Grid item xl={12}>
-                    {/*Position*/}
-                    <Typography  className={css.position} variant='h4' component='h3' ></Typography>
+                    Position
+                    <Typography  className={css.position} variant='h4' component='h3' >{positions[user.position].position_name}</Typography>
                 </Grid>
                 <Grid item>
-                    {/*Photo*/}
+                    Photo
                     <CardMedia className={css.photo}
                                image={"https://img5.goodfon.ru/wallpaper/nbig/4/54/stefan-koidl-by-stefan-koidl-sky-dragon.jpg"}/>
                 </Grid>
                 <div className={css.details}>
                     <CardContent>
                         <Grid item>
-                            {/*FIO*/}
-                            <Typography>Иванов Иван Иванович</Typography>
+                            FIO
+                            <Typography>{user.lastname} {user.name} {user.patronymic}</Typography>
                         </Grid>
                         <Grid item xl={6}>
-                            {/*Integralnoe znacenie*/}
+                            Integralnoe znacenie
                             <Typography>Интегральное значение</Typography>
-                            {/*Znacenie*/}
+                            Znacenie
                             <Typography>40%</Typography>
                         </Grid>
                         <Grid item xl={6}>
-                            {/*Ispolnitelnaya disciplina*/}
+                            Ispolnitelnaya disciplina
                             <Typography>Исполнительная дисциплина</Typography>
-                            {/*Pokazateli*/}
+                            Pokazateli
                             <Typography>20%</Typography>
                         </Grid>
                     </CardContent>
                 </div>
-            </Grid>
+            </Grid>)}
         </Card>
     );
 }

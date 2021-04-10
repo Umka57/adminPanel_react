@@ -11,8 +11,8 @@ interface User {
 
 export interface UserState{
     users:User[];
-    loading:boolean;
-    error:null | string;
+    loading_user:boolean;
+    error_user:null | string;
 }
 
 export enum UserActionTypes {

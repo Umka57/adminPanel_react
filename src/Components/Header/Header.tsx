@@ -44,7 +44,7 @@ const ProrectorsMenu: React.FC = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}>
                 {prorectors.map(prorector =>
-                <MenuItem key={prorector.id} onClick={handleClose}><NavLink className={css.navlink} to={`/prorectors${prorector.id}`}>{prorector.lastname} {prorector.name.substr(0,1)}.{prorector.patronymic.substr(0,1)}</NavLink></MenuItem>
+                <MenuItem key={prorector.id} onClick={handleClose}><NavLink className={css.navlink} to={`/user/${prorector.id}`}>{prorector.lastname} {prorector.name.substr(0,1)}.{prorector.patronymic.substr(0,1)}</NavLink></MenuItem>
                 )}
             </Menu>
         </div>
@@ -102,7 +102,6 @@ function StructuresMenu(){
         }
     },[])
 
-    console.log("ass",structure)
     return(
         <div>
             <Button aria-controls="structures-menu" aria-haspopup="true" onClick={handleClick} className={css.menu__navlink}>
@@ -110,7 +109,7 @@ function StructuresMenu(){
             </Button>
             <Menu id="structures-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                 {structure.map(struct =>
-                    <MenuItem onClick={handleClose}><NavLink className={css.navlink} to={`/structure${struct.id}`}>{struct.lastname} {struct.name.substr(0,1)}.{struct.patronymic.substr(0,1)}</NavLink></MenuItem>
+                    <MenuItem onClick={handleClose} key={struct.id}><NavLink className={css.navlink} to={`/user/${struct.id}`}>{struct.lastname} {struct.name.substr(0,1)}.{struct.patronymic.substr(0,1)}</NavLink></MenuItem>
                 )}
             </Menu>
         </div>
