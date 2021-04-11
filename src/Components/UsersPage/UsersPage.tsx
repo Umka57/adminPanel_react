@@ -17,7 +17,7 @@ const columns:GridColDef[] = [
 ];
 
 const UsersTable: React.FC = () => {
-    const {users,error_user,loading_user} = useTypedSelector(state => state.user)
+    const {users,error_user,loading_user} = useTypedSelector(state => state.users)
     const {roles,error_roles,loading_roles} = useTypedSelector(state => state.roles)
     const {positions,error_positions,loading_positions} = useTypedSelector(state => state.positions)
 

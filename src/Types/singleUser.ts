@@ -10,25 +10,25 @@ interface User {
 }
 
 export interface UserSingleState{
-    user:User;
+    user?:User;
     loading_user:boolean;
     error_user:null | string;
 }
 
 export enum UserSingleActionTypes {
-    FETCH_USERS= "FETCH_USERS",
-    FETCH_USERS_SUCCESS= "FETCH_USERS_SUCCESS",
-    FETCH_USERS_ERROR= "FETCH_USERS_ERROR",
+    FETCH_SINGLE_USER= "FETCH_SINGLE_USER",
+    FETCH_SINGLE_USER_SUCCESS= "FETCH_SINGLE_USER_SUCCESS",
+    FETCH_SINGLE_USER_ERROR= "FETCH_SINGLE_USER_ERROR",
 }
 interface FetchUserSingleAction {
-    type: UserSingleActionTypes.FETCH_USERS;
+    type: UserSingleActionTypes.FETCH_SINGLE_USER;
 }
 interface FetchUserSingleSuccessAction {
-    type: UserSingleActionTypes.FETCH_USERS_SUCCESS;
+    type: UserSingleActionTypes.FETCH_SINGLE_USER_SUCCESS;
     payload: any;
 }
 interface FetchUserSingleErrorAction {
-    type: UserSingleActionTypes.FETCH_USERS_ERROR;
+    type: UserSingleActionTypes.FETCH_SINGLE_USER_ERROR;
     payload: string;
 }
 export type UserSingleAction = FetchUserSingleAction | FetchUserSingleSuccessAction | FetchUserSingleErrorAction
