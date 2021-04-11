@@ -6,12 +6,13 @@ const initialState: ProrectorsState = {
     loading:false,
     error: null,
 }
+
 export const prorectorsReducer = (state= initialState,action: ProrectorsAction) => {
     switch (action.type){
         case ProrectorsActionType.FETCH_PRORECTORS:
             return {...state,loading:true}
         case ProrectorsActionType.FETCH_PRORECTORS_SUCCESS:
-            return {...state,loading: false,destinations: action.payload}
+            return {...state,loading: false,prorectors: action.payload}
         case ProrectorsActionType.FETCH_PRORECTORS_ERROR:
             return {...state,loading: false,error: action.payload}
         default:

@@ -3,16 +3,16 @@ from database import *
 from traceback import format_exc
 
 
-@routes.route("/positions.getPossible", methods=["GET", "POST"])
-def positions_get_possible():
+@routes.route("/roles.getPossible", methods=["GET", "POST"])
+def roles_get_possible():
     try:
         data = Role.select()
 
         return_data = {"count": len(data)}
         respone = []
 
-        for position in data:
-            respone.append(position.__dict__["__data__"])
+        for role in data:
+            respone.append(role.__dict__["__data__"])
 
         return_data.update(dict(response=respone))
 

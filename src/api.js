@@ -8,16 +8,16 @@ const instance = axios.create({
         'Access-Control-Allow-Origin': '*'}
 })
 
-export const getProrectors = (positionId = 2,roleId= 2) => {
-    return instance.post("/users.getPossible", this.props).then(response => {return response.data})
+export const getProrectors = (position = 2,role= 2) => {
+    return instance.get("/users.getPossible", {positionId:position ,roleId:role})
 }
 
 export const getStruct = (position = 3,role= 2) => {
-    return instance.post("/users.getPossible",this.props).then(response => {return response.data})
+    return instance.post("/users.getPossible",{positionId:position ,roleId:role})
 }
 
 export const getUsers = (positionId = 0,roleId= 0) => {
-    return instance.post("/users.getPossible",this.props).then(response => {return response.data})
+    return instance.post("/users.getPossible",this.props)
 }
 
 export const getUserData = (props) => {

@@ -6,7 +6,7 @@ export const fetchDestinations = (userId = null) => {
     return async (dispatch: Dispatch<DestinationsAction>) => {
         try {
             dispatch({type: DestinationsActionTypes.FETCH_DESTINATIONS})
-            const response = await destinationsGetPossible(userId)
+            const response = await axios.post()
             dispatch({type: DestinationsActionTypes.FETCH_DESTINATIONS_SUCCESS,payload:response.data})
         } catch (e){
             dispatch({type: DestinationsActionTypes.FETCH_DESTINATIONS_ERROR, payload: "Ошибка загрузки назначений"})
