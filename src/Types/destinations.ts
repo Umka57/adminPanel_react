@@ -12,9 +12,9 @@ interface Destination {
 
 export interface DestinationsState {
     destinations: Destination[],
-    loading: boolean,
-    error: null | string,
-    userId: null | number
+    loading_destination: boolean,
+    error_destination: null | string,
+    userId_destination: null | number
 }
 
 export enum DestinationsActionTypes {

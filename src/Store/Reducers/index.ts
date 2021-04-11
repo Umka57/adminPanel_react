@@ -7,6 +7,7 @@ import {rolesReducer} from "./rolesReducer"
 import {positionsReducer} from "./positionsReducer";
 import {singleUserReducer} from "./singleUserReducer";
 import {universityReducer} from "./universityReducer";
+import {destinationsValuesReducer} from "./destinationsValuesReducer";
 
 export const rootReducer = combineReducers({
     users: usersReducer,
@@ -16,7 +17,8 @@ export const rootReducer = combineReducers({
     roles: rolesReducer,
     positions: positionsReducer,
     user: singleUserReducer,
-    university: universityReducer
+    university: universityReducer,
+    destinationsValues: destinationsValuesReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
