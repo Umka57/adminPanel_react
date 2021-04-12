@@ -2,18 +2,18 @@ import {DestinationsAction, DestinationsActionTypes, DestinationsState} from "..
 
 const initialState: DestinationsState = {
     destinations: [],
-    loading:false,
-    error: null,
-    userId: null
+    loading_destination:false,
+    error_destination: null,
+    userId_destination: null
 }
 export const destinationsReducer = (state= initialState,action: DestinationsAction) => {
     switch (action.type){
         case DestinationsActionTypes.FETCH_DESTINATIONS:
-            return {...state,loading:true}
+            return {...state,loading_destination:true}
         case DestinationsActionTypes.FETCH_DESTINATIONS_SUCCESS:
-            return {...state,loading: false,destinations: action.payload}
+            return {...state,loading_destination: false,destinations: action.payload}
         case DestinationsActionTypes.FETCH_DESTINATIONS_ERROR:
-            return {...state,loading: false,error: action.payload}
+            return {...state,loading_destination: false,error_destination: action.payload}
         default:
             return state
     }

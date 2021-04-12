@@ -15,16 +15,21 @@ import {fetchPositions} from "../../Store/ActionCreator/positions";
 
 const UserCard: React.FC = () =>  {
     const {id} = useParams<any>()
+
     const {user,loading_user,error_user} = useTypedSelector(state => state.user)
     const {positions,loading_positions,error_positions} = useTypedSelector(state => state.positions)
-    const {fetchUser,fetchPositions} = useActions()
+    const {destinations,loading,error} = useTypedSelector(state => state.destinations)
+
+    const {fetchUser,fetchPositions,fetchDestinations} = useActions()
 
     useEffect(()=> {
         fetchPositions()
         fetchUser(id)
+        fetchDestinations(id)
     },[])
 
     if(!user) return null
+
     console.log("user",user)
 
     return (
@@ -59,26 +64,27 @@ const UserCard: React.FC = () =>  {
 
 const KPETableCurrentDate: React.FC = () => {
     const {id} = useParams<any>()
-    const {} = useTypedSelector(state => state.destinations)
-    const {positions,loading_positions,error_positions} = useTypedSelector(state => state.positions)
-    const {fetchUser,fetchPositions} = useActions()
+
+    const {destinations,loading_destination,error_destination} = useTypedSelector(state => state.destinations)
+    const {destinationValues,loading,error} = useTypedSelector(state => state.destinationsValues)
+
+    const {fetchDestinations,fetchDestinationsValues} = useActions()
 
     useEffect(()=> {
-        fetchPositions()
-        fetchUser(id)
+        fetchDestinations(id)
+        let values = {destinations.map(destination => {if(destination.user == id) {// @ts-ignore
+            fetchDestinationsValues(destination.id)}}), (destinationsValues.map(value => value)})}
     },[])
+
+    if(!destinations) return null
+
     return (
         <Chart chartType={"ColumnChart"}
                width={400}
                height={400}
                loader={<div>Loading chart</div>}
                data={[
-                   ['City', '2010 Population', '2000 Population'],
-                   ['New York City, NY', 8175000, 8008000],
-                   ['Los Angeles, CA', 3792000, 3694000],
-                   ['Chicago, IL', 2695000, 2896000],
-                   ['Houston, TX', 2099000, 1953000],
-                   ['Philadelphia, PA', 1526000, 1517000],
+                   ['Назначение','значение'],
                ]}
                options={{
                    title: 'Выполнение КПЭ(на текущую дату)',
@@ -100,7 +106,9 @@ function KPEDynamicTableQuarter() {
                width={400}
                height={400}
                loader={<div>Loading chart</div>}
-               data={}
+               data={[
+                   ['Назначение','значение'],
+               ]}
                options={{
                    title: 'Динамика выполнения КПЭ',
                    chartArea: {width: '100%'},

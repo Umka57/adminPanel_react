@@ -6,7 +6,7 @@ import * as RolesActionCreator from './roles'
 import * as PositionsActionCreator from './positions'
 import * as SingleUserActionCreator from './singleUser'
 import * as UniversityActionCreator from './university'
-
+import * as DestinationsValuesActionCreator from './destinationsValues'
 export default {
     ...UserActionCreator,
     ...DestinationActionCreator,
@@ -15,5 +15,6 @@ export default {
     ...RolesActionCreator,
     ...PositionsActionCreator,
     ...SingleUserActionCreator,
-    ...UniversityActionCreator
+    ...UniversityActionCreator,
+    ...DestinationsValuesActionCreator
 }
