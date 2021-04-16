@@ -29,7 +29,6 @@ const ProrectorsMenu: React.FC = () => {
     };
     const handleClose = () => {
         setAnchorEl(null);
-
     };
 
     return (
@@ -44,7 +43,7 @@ const ProrectorsMenu: React.FC = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}>
                 {prorectors.map(prorector =>
-                <MenuItem key={prorector.id} onClick={handleClose}><NavLink className={css.navlink} to={`/prorectors${prorector.id}`}>{prorector.lastname} {prorector.name.substr(0,1)}.{prorector.patronymic.substr(0,1)}</NavLink></MenuItem>
+                <MenuItem key={prorector.id} onClick={handleClose}><NavLink className={css.navlink} to={`/user/${prorector.id}`}>{prorector.lastname} {prorector.name.substr(0,1)}.{prorector.patronymic.substr(0,1)}</NavLink></MenuItem>
                 )}
             </Menu>
         </div>
@@ -62,6 +61,13 @@ function UniversityMenu(){
         setAnchorEl(null);
     };
 
+    const {university,loading,error} = useTypedSelector(state => state.university)
+    const {fetchUniversity} = useActions()
+
+    useEffect(()=> {
+        fetchUniversity()
+    },[])
+
     return(
         <div>
             <Button aria-controls="university-menu" aria-haspopup="true" onClick={handleClick} className={css.menu__navlink}>
@@ -74,10 +80,7 @@ function UniversityMenu(){
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
-            >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+            >{university.map(univer =>  <MenuItem key={univer.id} onClick={handleClose}><NavLink className={css.navlink} to={`/user/${univer.id}`}>{univer.lastname} {univer.name.substr(0,1)}.{univer.patronymic.substr(0,1)}</NavLink></MenuItem>)}
             </Menu>
         </div>
     );
@@ -102,7 +105,6 @@ function StructuresMenu(){
         }
     },[])
 
-    console.log("ass",structure)
     return(
         <div>
             <Button aria-controls="structures-menu" aria-haspopup="true" onClick={handleClick} className={css.menu__navlink}>
@@ -110,7 +112,7 @@ function StructuresMenu(){
             </Button>
             <Menu id="structures-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                 {structure.map(struct =>
-                    <MenuItem onClick={handleClose}><NavLink className={css.navlink} to={`/structure${struct.id}`}>{struct.lastname} {struct.name.substr(0,1)}.{struct.patronymic.substr(0,1)}</NavLink></MenuItem>
+                    <MenuItem onClick={handleClose} key={struct.id}><NavLink className={css.navlink} to={`/user/${struct.id}`}>{struct.lastname} {struct.name.substr(0,1)}.{struct.patronymic.substr(0,1)}</NavLink></MenuItem>
                 )}
             </Menu>
         </div>
@@ -119,14 +121,13 @@ function StructuresMenu(){
 export default class Header extends React.Component{
 
     render() {
-
         return (
             <AppBar position="relative">
                 <Toolbar>
                     <Typography className="h1">
                         Мгуту Статистика
                     </Typography>
-                    <Button><a href={'/users'}>Пользователи</a></Button>
+                    <Button className={css.menu__navlink}><a href={'/users'}>Пользователи</a></Button>
                     <ProrectorsMenu/>
                     <UniversityMenu/>
                     <StructuresMenu/>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 //Библиотка для отправки http запросов
 import axios from 'axios'
 //Импорт элементов из библиотеки Material Ui
@@ -8,71 +8,91 @@ import Chart from "react-google-charts";
 //Импорт css модуля для стилизации объектов
 import css from './Profile.module.css';
 import {getProrectors, getStruct, getUserData} from "../../api";
+import {useParams} from "react-router-dom"
+import {useTypedSelector} from "../../Hooks/useTypeSelector";
+import {useActions} from "../../Hooks/useActions";
+import {fetchPositions} from "../../Store/ActionCreator/positions";
 
+const UserCard: React.FC = () =>  {
+    const {id} = useParams<any>()
 
-function UserCard() {
+    const {user,loading_user,error_user} = useTypedSelector(state => state.user)
+    const {positions,loading_positions,error_positions} = useTypedSelector(state => state.positions)
+    const {destinations,loading,error} = useTypedSelector(state => state.destinations)
 
-    /*const classes = useStyles();*/
+    const {fetchUser,fetchPositions,fetchDestinations} = useActions()
+
+    useEffect(()=> {
+        fetchPositions()
+        fetchUser(id)
+        fetchDestinations(id)
+    },[])
+
+    if(!user) return null
+
+    console.log("user",user)
+
     return (
         <Card className={css.card}>
             <Grid container spacing={3}>
-                <Grid item xl={12}>
-                    {/*Position*/}
-                    <Typography  className={css.position} variant='h4' component='h3' ></Typography>
-                </Grid>
                 <Grid item>
-                    {/*Photo*/}
                     <CardMedia className={css.photo}
                                image={"https://img5.goodfon.ru/wallpaper/nbig/4/54/stefan-koidl-by-stefan-koidl-sky-dragon.jpg"}/>
                 </Grid>
                 <div className={css.details}>
                     <CardContent>
+                        <Grid item xl={6}>
+                            <Typography  className={css.position} variant='h4' component='h1'>{positions[user.position].position_name}</Typography>
+                        </Grid>
                         <Grid item>
-                            {/*FIO*/}
-                            <Typography>Иванов Иван Иванович</Typography>
+                            <Typography>{user.lastname} {user.name} {user.patronymic}</Typography>
                         </Grid>
                         <Grid item xl={6}>
-                            {/*Integralnoe znacenie*/}
                             <Typography>Интегральное значение</Typography>
-                            {/*Znacenie*/}
                             <Typography>40%</Typography>
                         </Grid>
                         <Grid item xl={6}>
-                            {/*Ispolnitelnaya disciplina*/}
                             <Typography>Исполнительная дисциплина</Typography>
-                            {/*Pokazateli*/}
                             <Typography>20%</Typography>
                         </Grid>
                     </CardContent>
                 </div>
-            </Grid>
+            </Grid>)
         </Card>
     );
 }
 
-function KPETableCurrentDate() {
+const KPETableCurrentDate: React.FC = () => {
+    const {id} = useParams<any>()
+
+    const {destinations,loading_destination,error_destination} = useTypedSelector(state => state.destinations)
+    const {destinationValues,loading,error} = useTypedSelector(state => state.destinationsValues)
+
+    const {fetchDestinations,fetchDestinationsValues} = useActions()
+
+    useEffect(()=> {
+        fetchDestinations(id)
+        let values = {destinations.map(destination => {if(destination.user == id) {// @ts-ignore
+            fetchDestinationsValues(destination.id)}}), (destinationsValues.map(value => value)})}
+    },[])
+
+    if(!destinations) return null
+
     return (
         <Chart chartType={"ColumnChart"}
                width={400}
                height={400}
                loader={<div>Loading chart</div>}
                data={[
-                   ['City', '2010 Population', '2000 Population'],
-                   ['New York City, NY', 8175000, 8008000],
-                   ['Los Angeles, CA', 3792000, 3694000],
-                   ['Chicago, IL', 2695000, 2896000],
-                   ['Houston, TX', 2099000, 1953000],
-                   ['Philadelphia, PA', 1526000, 1517000],
-               ]/*Enter data here*/}
+                   ['Назначение','значение'],
+               ]}
                options={{
-                   title: 'name',
+                   title: 'Выполнение КПЭ(на текущую дату)',
                    chartArea: {width: '100%'},
                    hAxis: {
-                       title: 'Name x axis',
                        minValue: 0,
                    },
                    vAxis: {
-                       title: 'Name y axis',
                    },
                }}
                legendToggle
@@ -87,14 +107,10 @@ function KPEDynamicTableQuarter() {
                height={400}
                loader={<div>Loading chart</div>}
                data={[
-                   ['Year', 'Sales', 'Expenses'],
-                   ['2013', 1000, 400],
-                   ['2014', 1170, 460],
-                   ['2015', 660, 1120],
-                   ['2016', 1030, 540],
-               ]/*Enter data here*/}
+                   ['Назначение','значение'],
+               ]}
                options={{
-                   title: 'name',
+                   title: 'Динамика выполнения КПЭ',
                    chartArea: {width: '100%'},
                    hAxis: {
                        title: 'Name x axis',
