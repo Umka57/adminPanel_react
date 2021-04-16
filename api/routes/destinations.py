@@ -3,7 +3,12 @@ from flask import request
 from database import *
 from pydantic import ValidationError
 from traceback import format_exc
-from settings import DestinationsGetInputData, DestinationsGetPossibleInputData
+from settings import (
+    DestinationsCreateInputData,
+    DestinationsGetInputData,
+    DestinationsGetPossibleInputData,
+    DestinationsCreateValuesInputData,
+)
 from json import dumps
 
 
@@ -21,13 +26,12 @@ def destinations_get():
             (Destination.id == inputData.destination_id)
         )
 
-    except Exception as e:
-
+    except:
         return format_exc(), 500
 
     try:
         return dumps([i.__dict__["__data__"] for i in tables]), 200
-    except Exception as e:
+    except:
         return format_exc(), 500
 
 
@@ -51,7 +55,7 @@ def destinations_get_values():
 
     try:
         return dumps([i.__dict__["__data__"] for i in tables]), 200
-    except Exception as e:
+    except:
         return format_exc(), 500
 
 
@@ -77,6 +81,45 @@ def destinations_get_possible():
 
         return return_data, 200
 
-    except Exception as e:
+    except:
+        return format_exc(), 500
 
+
+@routes.route("/destinations.create", methods=["POST"])
+def destinations_create():
+    try:
+        inputData = DestinationsCreateInputData.parse_raw(dumps(request.json))
+    except ValidationError as error:
+        return error.json(), 400
+    except:
+        return format_exc(), 500
+
+    try:
+        destination = Destination.create(**inputData.__dict__)
+
+        destination.save()
+
+        return destination.__dict__["__data__"], 200
+
+    except:
+        return format_exc(), 500
+
+
+@routes.route("/destinations.createValues", methods=["POST"])
+def destinations_create_values():
+    try:
+        inputData = DestinationsCreateValuesInputData.parse_raw(dumps(request.json))
+    except ValidationError as error:
+        return error.json(), 400
+    except:
+        return format_exc(), 500
+
+    try:
+        destination_values = DestinationValues.create(**inputData.__dict__)
+
+        destination_values.save()
+
+        return destination_values.__dict__["__data__"], 200
+
+    except:
         return format_exc(), 500
