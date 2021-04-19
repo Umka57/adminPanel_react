@@ -22,6 +22,25 @@
 | ------:| -----------:|
 |destinationId*|int|
 
+### create
+| Option | Type |
+| ------:| -----------:|
+|user*| int |
+|name*| str |
+|performanceIndicator*| str|
+|verificationIndicatorValue*| str |
+|year*| int |
+|plan*| str |
+|presentValue*| str |
+|percentCompletion*| int|
+
+### createValues
+| Option | Type |
+| ------:| -----------:|
+|destinationId*|int|
+|week*|int|
+|value*|float|
+
 ---
 
 ## users
