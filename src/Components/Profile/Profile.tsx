@@ -18,7 +18,7 @@ const UserCard: React.FC = () =>  {
 
     const {user,loading_user,error_user} = useTypedSelector(state => state.user)
     const {positions,loading_positions,error_positions} = useTypedSelector(state => state.positions)
-    const {destinations,loading,error} = useTypedSelector(state => state.destinations)
+    const {destinations,loading_destination,error_destination} = useTypedSelector(state => state.destinations)
 
     const {fetchUser,fetchPositions,fetchDestinations} = useActions()
 
@@ -72,8 +72,8 @@ const KPETableCurrentDate: React.FC = () => {
 
     useEffect(()=> {
         fetchDestinations(id)
-        let values = {destinations.map(destination => {if(destination.user == id) {// @ts-ignore
-            fetchDestinationsValues(destination.id)}}), (destinationsValues.map(value => value)})}
+        /*let values = {destinations.map(destination => {if(destination.user == id) {// @ts-ignore
+            fetchDestinationsValues(destination.id)}}), (destinationsValues.map(value => value)})}*/
     },[])
 
     if(!destinations) return null
