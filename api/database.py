@@ -1,11 +1,13 @@
 from re import L
 from peewee import (
+    BooleanField,
     CharField,
     FloatField,
     ForeignKeyField,
     PostgresqlDatabase,
     Model,
     IntegerField,
+    AutoField,
 )
 
 from playhouse.sqlite_ext import JSONField
@@ -53,6 +55,13 @@ class User(BaseModel):
     email = CharField(max_length=256, null=True)
     position = ForeignKeyField(Position, on_delete="RESTRICT", null=True)
     role = ForeignKeyField(Role, on_delete="RESTRICT", null=True)
+    img_link = CharField(max_length=256, null=True)
+    img_is_local = BooleanField()
+
+
+class VerificationType(BaseModel):
+    id = AutoField()
+    verification_name = CharField(max_length=128)
 
 
 class Destination(BaseModel):
@@ -60,6 +69,7 @@ class Destination(BaseModel):
     name = CharField(max_length=255)
     performance_indicator = CharField(max_length=200)
     verification_indicator_value = CharField(max_length=200)
+    verification = ForeignKeyField(VerificationType)
     year = IntegerField()
     plan = CharField(max_length=200)
     present_value = CharField(max_length=500)
@@ -82,6 +92,7 @@ if database:
     Position.create_table(True)
     Role.create_table(True)
     User.create_table(True)
+    VerificationType.create_table(True)
     Destination.create_table(True)
     DestinationValues.create_table(True)
     KPI.create_table(True)
