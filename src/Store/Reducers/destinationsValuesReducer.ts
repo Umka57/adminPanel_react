@@ -6,18 +6,28 @@ import {
 
 const initialState: DestinationsValuesState = {
     destinationValues: [],
-    loading:false,
-    error: null,
-    userId: null
+    fetch_loading_destinations_values: false,
+    fetch_error_destinations_values: null,
+    push_loading_destinations_values: false,
+    push_error_destinations_values: null,
+    userId_destinations_values: null
 }
 export const destinationsValuesReducer = (state= initialState,action: DestinationsValuesAction) => {
     switch (action.type){
         case DestinationsValuesActionTypes.FETCH_DESTINATIONS_VALUES:
-            return {...state,loading:true}
+            return {...state,fetch_loading_destinations_values:true}
         case DestinationsValuesActionTypes.FETCH_DESTINATIONS_VALUES_SUCCESS:
-            return {...state,loading: false,destinationValues: action.payload}
+            return {...state,fetch_loading_destinations_values: false,destinationValues: action.payload}
         case DestinationsValuesActionTypes.FETCH_DESTINATIONS_VALUES_ERROR:
-            return {...state,loading: false,error: action.payload}
+            return {...state,fetch_loading_destinations_values: false,fetch_error_destinations_values: action.payload}
+
+        case DestinationsValuesActionTypes.PUSH_DESTINATIONS_VALUES:
+            return {...state,push_loading_destinations_values:true}
+        case DestinationsValuesActionTypes.PUSH_DESTINATIONS_VALUES_SUCCESS:
+            return {...state,push_loading_destinations_values: false,destinationValues: action.payload}
+        case DestinationsValuesActionTypes.PUSH_DESTINATIONS_VALUES_ERROR:
+            return {...state,push_loading_destinations_values: false,push_error_destinations_values: action.payload}
+
         default:
             return state
     }

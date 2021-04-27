@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom"
 
 //Импорт элементов из библиотеки Material Ui
@@ -11,7 +11,7 @@ import {
     Table, TableBody,
     TableContainer,
     TableHead, TableRow, TableCell,
-    Typography, Input, Button, FormControl
+    Typography, Input, Button, FormControl, Modal, TextField
 } from "@material-ui/core";
 
 import SaveIcon from '@material-ui/icons/Save';
@@ -76,51 +76,6 @@ const UserCard: React.FC = () =>  {
             </Grid>)
         </Card>
     );
-}
-
-const AddDestinationDataTable: React.FC = () => {
-
-        return (
-            <TableContainer component={Paper}>
-                <Table aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Направление </TableCell>
-                            <TableCell align="right">Показатель результативности</TableCell>
-                            <TableCell align="right">Верификация значения показателя</TableCell>
-                            <TableCell align="right">План на 1 квартал</TableCell>
-                            <TableCell align="right">Текущее значение показателя</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                            <TableRow>
-                                <FormControl>
-                                    <TableCell component="th" scope="row"><Input name={'destinationName'} placeholder="Название" inputProps={{ 'aria-label': 'description' }} required={true}/></TableCell>
-                                    <TableCell align="right"><Input name={'destinationPerformanceIndicator'} placeholder="значение" inputProps={{ 'aria-label': 'description' }} required={true}/></TableCell>
-                                    <TableCell align="right"><Input name={''} placeholder="документ, курирующая служба" inputProps={{ 'aria-label': 'description' }} required={true}/></TableCell>
-                                    <TableCell align="right"><Input placeholder="план" inputProps={{ 'aria-label': 'description' }} required={true}/></TableCell>
-                                    <TableCell align="right"><Input placeholder="значение" inputProps={{ 'aria-label': 'description' }} required={true}/></TableCell>
-                                </FormControl>
-                            </TableRow>
-                    </TableBody>
-                </Table>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                    className={css.button}
-                    startIcon={<AddIcon />}>
-                </Button>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                    className={css.button}
-                    startIcon={<SaveIcon />}>
-                    Сохранить
-                </Button>
-            </TableContainer>
-        );
 }
 
 export default class Profile extends React.Component{

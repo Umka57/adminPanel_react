@@ -13,3 +13,21 @@ export const fetchDestinationsValues = (id = null) => {
         }
     }
 }
+
+export const pushDestinationsValues = (destinationsValues:any = null) => {
+    return async (dispatch: Dispatch<DestinationsValuesAction>) => {
+        try {
+            dispatch({type: DestinationsValuesActionTypes.PUSH_DESTINATIONS_VALUES})
+            const response = await axios.post("/destinations.createValues",
+                {
+                    "id":destinationsValues.id,
+                    "destination": destinationsValues.destination,
+                    "week":destinationsValues.week,
+                    "value":destinationsValues.value
+                    })
+            dispatch({type: DestinationsValuesActionTypes.PUSH_DESTINATIONS_VALUES_SUCCESS,payload:response.data})
+        } catch (e){
+            dispatch({type: DestinationsValuesActionTypes.PUSH_DESTINATIONS_VALUES_ERROR, payload: "Ошибка загрузки данных из назначений"})
+        }
+    }
+}
