@@ -1,17 +1,33 @@
 import React, {useEffect} from "react";
-//Библиотка для отправки http запросов
-import axios from 'axios'
-//Импорт элементов из библиотеки Material Ui
-import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
-//Импорт библиоткеки для создания графиков
-import Chart from "react-google-charts";
-//Импорт css модуля для стилизации объектов
-import css from './Profile.module.css';
-import {getProrectors, getStruct, getUserData} from "../../api";
 import {useParams} from "react-router-dom"
+
+//Импорт элементов из библиотеки Material Ui
+import {
+    Card,
+    CardContent,
+    CardMedia,
+    Grid,
+    Paper,
+    Table, TableBody,
+    TableContainer,
+    TableHead, TableRow, TableCell,
+    Typography, Input, Button, FormControl
+} from "@material-ui/core";
+
+import SaveIcon from '@material-ui/icons/Save';
+import AddIcon from '@material-ui/icons/Add';
+
+//Импорт css модуля для стилизации объектов
+import css from './Profile.module.css'
+
+//Компоненты Redux
 import {useTypedSelector} from "../../Hooks/useTypeSelector";
 import {useActions} from "../../Hooks/useActions";
 import {fetchPositions} from "../../Store/ActionCreator/positions";
+
+//Импорт графиков
+import {KPEDynamicTableQuarter} from "../Charts/KPEDynamicTableQuarter"
+import {KPETableCurrentDate} from "../Charts/KPETableCurrentDate"
 
 const UserCard: React.FC = () =>  {
     const {id} = useParams<any>()
@@ -19,18 +35,18 @@ const UserCard: React.FC = () =>  {
     const {user,loading_user,error_user} = useTypedSelector(state => state.user)
     const {positions,loading_positions,error_positions} = useTypedSelector(state => state.positions)
     const {destinations,loading_destination,error_destination} = useTypedSelector(state => state.destinations)
+    const {destinationValues,loading,error} = useTypedSelector(state => state.destinationsValues)
 
-    const {fetchUser,fetchPositions,fetchDestinations} = useActions()
+    const {fetchUser,fetchPositions,fetchDestinations,fetchDestinationsValues} = useActions()
 
     useEffect(()=> {
         fetchPositions()
         fetchUser(id)
         fetchDestinations(id)
+        fetchDestinationsValues(id)
     },[])
 
     if(!user) return null
-
-    console.log("user",user)
 
     return (
         <Card className={css.card}>
@@ -62,70 +78,53 @@ const UserCard: React.FC = () =>  {
     );
 }
 
-const KPETableCurrentDate: React.FC = () => {
-    const {id} = useParams<any>()
+const AddDestinationDataTable: React.FC = () => {
 
-    const {destinations,loading_destination,error_destination} = useTypedSelector(state => state.destinations)
-    const {destinationValues,loading,error} = useTypedSelector(state => state.destinationsValues)
-
-    const {fetchDestinations,fetchDestinationsValues} = useActions()
-
-    useEffect(()=> {
-        fetchDestinations(id)
-        /*let values = {destinations.map(destination => {if(destination.user == id) {// @ts-ignore
-            fetchDestinationsValues(destination.id)}}), (destinationsValues.map(value => value)})}*/
-    },[])
-
-    if(!destinations) return null
-
-    return (
-        <Chart chartType={"ColumnChart"}
-               width={400}
-               height={400}
-               loader={<div>Loading chart</div>}
-               data={[
-                   ['Назначение','значение'],
-               ]}
-               options={{
-                   title: 'Выполнение КПЭ(на текущую дату)',
-                   chartArea: {width: '100%'},
-                   hAxis: {
-                       minValue: 0,
-                   },
-                   vAxis: {
-                   },
-               }}
-               legendToggle
-        />
-    );
-}
-
-function KPEDynamicTableQuarter() {
-    return (
-        <Chart chartType="AreaChart"
-               width={400}
-               height={400}
-               loader={<div>Loading chart</div>}
-               data={[
-                   ['Назначение','значение'],
-               ]}
-               options={{
-                   title: 'Динамика выполнения КПЭ',
-                   chartArea: {width: '100%'},
-                   hAxis: {
-                       title: 'Name x axis',
-                       minValue: 0,
-                   },
-                   vAxis: {
-                       title: 'Name y axis',
-                   },
-               }}
-               legendToggle
-        />
-    );
+        return (
+            <TableContainer component={Paper}>
+                <Table aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Направление </TableCell>
+                            <TableCell align="right">Показатель результативности</TableCell>
+                            <TableCell align="right">Верификация значения показателя</TableCell>
+                            <TableCell align="right">План на 1 квартал</TableCell>
+                            <TableCell align="right">Текущее значение показателя</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                            <TableRow>
+                                <FormControl>
+                                    <TableCell component="th" scope="row"><Input name={'destinationName'} placeholder="Название" inputProps={{ 'aria-label': 'description' }} required={true}/></TableCell>
+                                    <TableCell align="right"><Input name={'destinationPerformanceIndicator'} placeholder="значение" inputProps={{ 'aria-label': 'description' }} required={true}/></TableCell>
+                                    <TableCell align="right"><Input name={''} placeholder="документ, курирующая служба" inputProps={{ 'aria-label': 'description' }} required={true}/></TableCell>
+                                    <TableCell align="right"><Input placeholder="план" inputProps={{ 'aria-label': 'description' }} required={true}/></TableCell>
+                                    <TableCell align="right"><Input placeholder="значение" inputProps={{ 'aria-label': 'description' }} required={true}/></TableCell>
+                                </FormControl>
+                            </TableRow>
+                    </TableBody>
+                </Table>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="medium"
+                    className={css.button}
+                    startIcon={<AddIcon />}>
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="medium"
+                    className={css.button}
+                    startIcon={<SaveIcon />}>
+                    Сохранить
+                </Button>
+            </TableContainer>
+        );
 }
 
 export default class Profile extends React.Component{
+
     render() {
         return (
             <Grid container spacing={3}>

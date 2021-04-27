@@ -34,6 +34,7 @@ const UniverMenu: React.FC = () => {
 
     const {university,loading,error} = useTypedSelector(state => state.university)
     const {fetchUniversity} = useActions()
+    const param = 'university'
 
     useEffect(()=> {
         fetchUniversity()
@@ -45,7 +46,7 @@ const UniverMenu: React.FC = () => {
                 <Button className={css.menu__navlink}>
                     <NavLink
                         className={css.navlink}
-                        to={`/user/${0}`}>
+                        to={`/university/${param}`}>
                         Университеты
                     </NavLink>
                 </Button>

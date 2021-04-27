@@ -33,6 +33,7 @@ const ProsMenu: React.FC = () => {
 
     const {prorectors,loading,error} = useTypedSelector(state => state.prorectors)
     const {fetchProrectors} = useActions()
+    const param = 'prorectors'
 
     useEffect(()=> {
         fetchProrectors()
@@ -45,7 +46,7 @@ const ProsMenu: React.FC = () => {
                 <Button className={css.menu__navlink}>
                     <NavLink
                         className={css.navlink}
-                        to={`/user/${0}`}>
+                        to={`/statistic/${param}`}>
                         Проректора
                     </NavLink>
                 </Button>

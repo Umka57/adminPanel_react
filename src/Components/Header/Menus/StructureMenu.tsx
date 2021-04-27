@@ -33,6 +33,7 @@ const StrMenu: React.FC = () => {
 
     const {structure,loading,error} = useTypedSelector(state => state.structure)
     const {fetchStructure} = useActions()
+    const param = 'structure'
 
     useEffect(()=> {
         if(!structure.length){
@@ -46,7 +47,7 @@ const StrMenu: React.FC = () => {
                 <Button className={css.menu__navlink}>
                     <NavLink
                         className={css.navlink}
-                        to={`/user/${0}`}>
+                        to={`/statistic/${param}`}>
                         Структуры
                     </NavLink>
                 </Button>
