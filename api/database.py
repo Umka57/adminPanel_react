@@ -78,8 +78,10 @@ class Destination(BaseModel):
 
 class DestinationValues(BaseModel):
     destination = ForeignKeyField(Destination, on_delete="RESTRICT")
+    quarter = IntegerField()
     week = IntegerField()
     value = FloatField()
+    is_verified = BooleanField(default=False)
 
 
 class KPI(BaseModel):
