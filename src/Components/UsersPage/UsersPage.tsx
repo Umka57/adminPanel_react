@@ -11,7 +11,7 @@ const columns:GridColDef[] = [
     { field: 'name', headerName: 'Имя', width: 130 },
     { field: 'patronymic', headerName: 'Отчество', width: 130 },
     { field: 'email', headerName: 'Почта', width: 130 },
-    {field: 'telephone', headerName: 'Телефон', width: 130,},
+    { field: 'telephone', headerName: 'Телефон', width: 130,},
     { field: 'position', headerName: 'Должность', width: 130 },
     { field: 'role', headerName: 'Роль', width: 130 }
 ];
@@ -29,7 +29,6 @@ const UsersTable: React.FC = () => {
         fetchPositions()
     },[])
 
-   /* user.map{user=> user.position = {}}*/
     return (<div style={{ height: 400, width: '100%' }}>
     <DataGrid rows={users} columns={columns} />
     </div>

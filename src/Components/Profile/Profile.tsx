@@ -7,14 +7,9 @@ import {
     CardContent,
     CardMedia,
     Grid,
-    Paper,
-    Table, TableBody,
-    TableContainer,
-    TableHead, TableRow, TableCell,
-    Typography, Input, Button, FormControl, Modal, TextField
+    Typography, Button,
 } from "@material-ui/core";
-
-import SaveIcon from '@material-ui/icons/Save';
+import {DataGrid, GridColDef} from "@material-ui/data-grid";
 import AddIcon from '@material-ui/icons/Add';
 
 //Импорт css модуля для стилизации объектов
@@ -29,21 +24,66 @@ import {fetchPositions} from "../../Store/ActionCreator/positions";
 import {KPEDynamicTableQuarter} from "../Charts/KPEDynamicTableQuarter"
 import {KPETableCurrentDate} from "../Charts/KPETableCurrentDate"
 
+const DestinationsTable: React.FC =()=>{
+    const {id} = useParams<any>()
+
+    const {destinations,fetch_loading_destination,fetch_error_destination} = useTypedSelector(state => state.destinations)
+    const {destinationValues,fetch_loading_destinations_values,fetch_error_destinations_values} = useTypedSelector(state => state.destinationsValues)
+
+    const {fetchDestinations,fetchDestinationsValues} = useActions()
+
+    useEffect(()=>{
+        fetchDestinations(id)
+        fetchDestinationsValues(id)
+    },[])
+
+    const columns:GridColDef[] = [
+        { field: 'id', headerName: 'ID', width: 50 },
+        { field: 'name', headerName: 'Направление', width: 200 },
+        { field: 'performance_indicator', headerName: 'Показатель результативности, значение', width: 130 },
+        { field: 'verification_indicator_value', headerName: 'Верификация значения показателя (документ, курирующая служба)', width: 130 },
+        { field: 'verification', headerName: 'Тип верификации', width: 130,},
+        { field: 'plan', headerName: 'План на квартал', width: 130 },
+        { field: 'year', headerName: 'Должность', width: 130 },
+        { field: 'present_value', headerName: 'Текущее значение показателя', width: 130 },
+        { field: 'value', headerName: 'Значение', width: 130 },
+        { field: 'percent_completion', headerName: 'Процент выполнения', width: 130 },
+    ];
+
+    /*let data = [destinations.map(destination => { return[
+            [destination.name],
+            [destination.performance_indicator],
+            [destination.verification_indicator_value],
+            [destination.verification],
+            [destination.plan],
+            [destination.present_value]]}),
+        destinationValues.map(destinationValue => {return [destinationValue.value]})
+        ]*/
+    return (
+        <div style={{ height: 400, width: '100%' }}>
+            <DataGrid rows={[destinations,destinationValues]} columns={columns} />
+            <Button
+                variant="contained"
+                color="primary"
+                size="medium"
+                className={css.button}
+                startIcon={<AddIcon/>}>
+                onClick={}
+            </Button>
+        </div>
+    );
+}
 const UserCard: React.FC = () =>  {
     const {id} = useParams<any>()
 
     const {user,loading_user,error_user} = useTypedSelector(state => state.user)
     const {positions,loading_positions,error_positions} = useTypedSelector(state => state.positions)
-    const {destinations,loading_destination,error_destination} = useTypedSelector(state => state.destinations)
-    const {destinationValues,loading,error} = useTypedSelector(state => state.destinationsValues)
 
-    const {fetchUser,fetchPositions,fetchDestinations,fetchDestinationsValues} = useActions()
+    const {fetchUser,fetchPositions} = useActions()
 
     useEffect(()=> {
         fetchPositions()
         fetchUser(id)
-        fetchDestinations(id)
-        fetchDestinationsValues(id)
     },[])
 
     if(!user) return null
@@ -73,7 +113,10 @@ const UserCard: React.FC = () =>  {
                         </Grid>
                     </CardContent>
                 </div>
-            </Grid>)
+                <div>
+                    <DestinationsTable/>
+                </div>
+            </Grid>
         </Card>
     );
 }
