@@ -8,10 +8,11 @@ export function KPETableCurrentDate(props:any){
 
     const {destinations,fetch_loading_destination,fetch_error_destination} = useTypedSelector(state => state.destinations)
 
+    console.log(destinations)
     const concreteDestination = destinations.filter(dest => dest.user == props.userId)
 
-    const mapDataKPI = concreteDestination.map(destination => {return [[destination.name],[destination.percent_completion]]})
-
+    const mapDataKPI = concreteDestination.map(destination => {return [destination.name,destination.percent_completion]})
+    console.log(mapDataKPI)
     return (
         <Chart chartType={"ColumnChart"}
                width={400}

@@ -62,13 +62,16 @@ export default function CompositeStatistic() {
     const {structure} = useTypedSelector(state => state.structure)
     const {university} = useTypedSelector(state => state.university)
     const {destinations} = useTypedSelector(state => state.destinations)
+    const {users} = useTypedSelector(state => state.users)
 
     const {fetchUser} = useActions()
 
-    let param = prorectors
-    let userList = Array()
+    let param = Array()
 
     switch (usertype) {
+        case 'prorectors':
+            param = prorectors
+            break;
         case 'structure':
             param = structure
             break;
@@ -76,17 +79,16 @@ export default function CompositeStatistic() {
             param = university
             break;
     }
+    console.log(param)
 
     useEffect(() => {
-       userList = param.map(elem => {
-            return fetchUser(elem.id), fetchDestinations(elem.id), destinations.map(dest => fetchDestinationsValues(dest.id))
-        })
+       param.map(elem => fetchDestinations(elem.id), destinations.map(dest =>fetchDestinationsValues(dest.id)))
     }, [])
 
     // @ts-ignore
     return (
         <div>
-        {userList.map(user => <div userId={user.id}/>)}
+        {param.map(user => <AdvancedUserCard userId={user.id}/>)}
         </div>
     );
 }

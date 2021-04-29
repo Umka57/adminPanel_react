@@ -8,7 +8,7 @@ export const fetchDestinations = (id = null) => {
         try {
             dispatch({type: DestinationsActionTypes.FETCH_DESTINATIONS})
             const response = await axios.post("/destinations.getPossible", {"userId":id})
-            dispatch({type: DestinationsActionTypes.FETCH_DESTINATIONS_SUCCESS,payload:response.data})
+            dispatch({type: DestinationsActionTypes.FETCH_DESTINATIONS_SUCCESS,payload:response.data.response})
         } catch (e){
             dispatch({type: DestinationsActionTypes.FETCH_DESTINATIONS_ERROR, payload: "Ошибка загрузки назначений с сервера"})
         }
