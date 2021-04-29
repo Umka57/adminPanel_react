@@ -93,7 +93,7 @@ const UserCard: React.FC = () =>  {
             <Grid container spacing={3}>
                 <Grid item>
                     <CardMedia className={css.photo}
-                               image={"https://img5.goodfon.ru/wallpaper/nbig/4/54/stefan-koidl-by-stefan-koidl-sky-dragon.jpg"}/>
+                               image={user.img_link}/>
                 </Grid>
                 <div className={css.details}>
                     <CardContent>
@@ -114,28 +114,34 @@ const UserCard: React.FC = () =>  {
                     </CardContent>
                 </div>
                 <div>
-                    <DestinationsTable/>
+                    {/*<DestinationsTable/>*/}
                 </div>
             </Grid>
         </Card>
     );
 }
 
-export default class Profile extends React.Component{
+export default function Profile(){
+        const {id} = useParams<any>()
+        const {fetchDestinations,fetchDestinationsValues} = useActions()
 
-    render() {
+        useEffect( ()=> {
+            fetchDestinations(id)
+            fetchDestinationsValues(id)
+        },[])
+
         return (
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <UserCard/>
                 </Grid>
                 <Grid item xs={6}>
-                    <KPETableCurrentDate/>
+                    <KPETableCurrentDate userId={id}/>
                 </Grid>
                 <Grid item xs={6}>
-                    <KPEDynamicTableQuarter/>
+                    <KPEDynamicTableQuarter userId={id}/>
                 </Grid>
             </Grid>
         )
-    }
+
 }

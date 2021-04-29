@@ -6,7 +6,9 @@ interface User {
     telephone: string,
     email: string,
     position: number,
-    role: number
+    role: number,
+    img_link: string,
+    img_is_local: boolean
 }
 
 export interface UserSingleState{

@@ -4,12 +4,13 @@ import {useTypedSelector} from "../../Hooks/useTypeSelector";
 import {useActions} from "../../Hooks/useActions";
 import Chart from "react-google-charts";
 
-export const KPETableCurrentDate: React.FC = () => {
+export function KPETableCurrentDate(props:any){
 
     const {destinations,fetch_loading_destination,fetch_error_destination} = useTypedSelector(state => state.destinations)
-    const {destinationValues,fetch_loading_destinations_values,fetch_error_destinations_values} = useTypedSelector(state => state.destinationsValues)
 
-    const mapDataKPI = destinations.map(destination => {return [[destination.name],[destination.percent_completion]]})
+    const concreteDestination = destinations.filter(dest => dest.user == props.userId)
+
+    const mapDataKPI = concreteDestination.map(destination => {return [[destination.name],[destination.percent_completion]]})
 
     return (
         <Chart chartType={"ColumnChart"}

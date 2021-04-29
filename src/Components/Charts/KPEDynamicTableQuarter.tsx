@@ -2,12 +2,15 @@ import {useTypedSelector} from "../../Hooks/useTypeSelector";
 import Chart from "react-google-charts";
 import React, {useEffect} from "react";
 import {useActions} from "../../Hooks/useActions";
+import {List} from "@material-ui/core";
 
-export const KPEDynamicTableQuarter:React.FC = () => {
-    const {destinations,loading_destination,error_destination} = useTypedSelector(state => state.destinations)
-    const {destinationValues,loading,error} = useTypedSelector(state => state.destinationsValues)
+export function KPEDynamicTableQuarter(props:any) {
+    const {destinations,fetch_loading_destination,fetch_error_destination} = useTypedSelector(state => state.destinations)
+    const {destinationValues,fetch_loading_destinations_values,fetch_error_destinations_values} = useTypedSelector(state => state.destinationsValues)
 
-    const mapDynamicDataKPI = destinationValues.map(value => {return [[value.week],[value.value]]})
+    const concreteDestination = destinations.filter(dest => dest.user == props.userId)
+
+    const mapDynamicDataKPI = concreteDestination.map(dest => { return destinationValues.filter(value => value.destination == dest.id).map(data=> {return [[data.week],[data.value]]})})
 
     return (
         <Chart chartType="AreaChart"
@@ -15,7 +18,7 @@ export const KPEDynamicTableQuarter:React.FC = () => {
                height={400}
                loader={<div>Loading chart</div>}
                data={[
-                   ['Неделя',destinations.map(destination=>destination.name)],
+                   ['Неделя',concreteDestination.map(destination=>destination.name)],
                    mapDynamicDataKPI
                ]}
                options={{

@@ -22,8 +22,10 @@ export const pushDestinationsValues = (destinationsValues:any = null) => {
                 {
                     "id":destinationsValues.id,
                     "destination": destinationsValues.destination,
+                    "quarter": destinationsValues.quarter,
                     "week":destinationsValues.week,
-                    "value":destinationsValues.value
+                    "value":destinationsValues.value,
+                    "is_verified":destinationsValues.is_verified
                     })
             dispatch({type: DestinationsValuesActionTypes.PUSH_DESTINATIONS_VALUES_SUCCESS,payload:response.data})
         } catch (e){

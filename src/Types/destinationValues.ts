@@ -1,8 +1,10 @@
 interface DestinationValues {
     id: number,
     destination: number,
+    quarter: number,
     week: number,
-    value: number
+    value: number,
+    is_verified: number
 }
 
 export interface DestinationsValuesState {

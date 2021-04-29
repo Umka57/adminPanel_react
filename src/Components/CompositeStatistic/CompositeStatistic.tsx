@@ -2,60 +2,39 @@ import React, {useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useTypedSelector} from "../../Hooks/useTypeSelector";
 import {useActions} from "../../Hooks/useActions";
-import Chart from "react-google-charts";
 import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
 import css from "../Profile/Profile.module.css";
 
 //Импорт графиков
 import {KPEDynamicTableQuarter} from "../Charts/KPEDynamicTableQuarter"
 import {KPETableCurrentDate} from "../Charts/KPETableCurrentDate"
-import {fetchProrectors} from "../../Store/ActionCreator/prorectors";
+import {fetchDestinations} from "../../Store/ActionCreator/destinations";
+import {fetchDestinationsValues} from "../../Store/ActionCreator/destinationsValues";
 
-const AdvancedUserCard: React.FC = () => {
-    const {usertype} = useParams<any>()
+function AdvancedUserCard(props: any) {
 
-    const {user} = useTypedSelector(state => state.user)
+    const {users} = useTypedSelector(state => state.users)
     const {positions} = useTypedSelector(state => state.positions)
 
-    const {prorectors} = useTypedSelector(state => state.prorectors)
-    const {structure} = useTypedSelector(state => state.structure)
-    const {university} = useTypedSelector(state => state.university)
+    const selectedUser = users.find(value => value.id == props.userId)
 
-    const {destinations} = useTypedSelector(state => state.destinations)
-    const {destinationValues} = useTypedSelector(state => state.destinationsValues)
+    if (!selectedUser) return null
 
-    const {fetchUser,fetchDestinations,fetchDestinationsValues} = useActions()
-
-    useEffect(()=> {
-        switch (usertype){
-            case 'prorector':
-                prorectors.forEach(elem => {fetchUser(elem.id),fetchDestinations(elem.id),fetchDestinationsValues(elem.id)})
-                break
-            case 'structure':
-                structure.forEach(elem => {fetchUser(elem.id),fetchDestinations(elem.id),fetchDestinationsValues(elem.id)})
-                break
-            case 'university':
-                university.forEach(elem => {fetchUser(elem.id),fetchDestinations(elem.id),fetchDestinationsValues(elem.id)})
-                break
-        }
-    },[])
-
-    if(!user) return null
-
-    return(
+    return (
         <Card>
             <Grid container spacing={3}>
                 <Grid item>
                     <CardMedia className={css.photo}
-                               image={"https://img5.goodfon.ru/wallpaper/nbig/4/54/stefan-koidl-by-stefan-koidl-sky-dragon.jpg"}/>
+                               image={selectedUser.img_link}/>
                 </Grid>
                 <div className={css.details}>
                     <CardContent>
                         <Grid item xl={6}>
-                            <Typography  className={css.position} variant='h4' component='h1'>{positions[user.position].position_name}</Typography>
+                            <Typography className={css.position} variant='h4'
+                                        component='h1'>{positions[selectedUser.position].position_name}</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography>{user.lastname} {user.name} {user.patronymic}</Typography>
+                            <Typography>{selectedUser.lastname} {selectedUser.name} {selectedUser.patronymic}</Typography>
                         </Grid>
                         <Grid item xl={6}>
                             <Typography>Интегральное значение</Typography>
@@ -65,8 +44,8 @@ const AdvancedUserCard: React.FC = () => {
                             <Typography>Исполнительная дисциплина</Typography>
                             <Typography>20%</Typography>
                         </Grid>
-                        <KPETableCurrentDate/>
-                        <KPEDynamicTableQuarter/>
+                        <KPETableCurrentDate userId={selectedUser.id}/>
+                        <KPEDynamicTableQuarter userId={selectedUser.id}/>
                     </CardContent>
                 </div>
             </Grid>
@@ -74,11 +53,35 @@ const AdvancedUserCard: React.FC = () => {
     );
 }
 
-export default class CompositeStatistic extends React.Component{
+export default function CompositeStatistic() {
 
-    render(){
-        return(
+    const {usertype} = useParams<any>()
 
-        );
-    }
+    const {prorectors} = useTypedSelector(state => state.prorectors)
+    const {structure} = useTypedSelector(state => state.structure)
+    const {university} = useTypedSelector(state => state.university)
+    const {destinations} = useTypedSelector(state => state.destinations)
+
+    const {fetchUser} = useActions()
+
+    useEffect(() => {
+        if (usertype === 'prorector') {
+            let userList = prorectors.map(elem => {
+                fetchUser(elem.id),fetchDestinations(elem.id),destinations.map(dest=>fetchDestinationsValues(dest.id))
+            })
+        } else if (usertype === 'structure') {
+            let userList = structure.map(elem => {
+                fetchUser(elem.id),fetchDestinations(elem.id),destinations.map(dest=>fetchDestinationsValues(dest.id))
+            })
+        } else if (usertype === 'university') {
+            let userList = university.map(elem => {
+                fetchUser(elem.id),fetchDestinations(elem.id),destinations.map(dest=>fetchDestinationsValues(dest.id))
+            })
+        }
+    }, [])
+
+    return (
+        <div></div>
+        /*{userList.map(user => <AdvancedUserCard userId={user.id}>)}*/
+    );
 }
