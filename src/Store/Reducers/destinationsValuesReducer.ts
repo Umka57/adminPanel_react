@@ -17,6 +17,7 @@ export const destinationsValuesReducer = (state= initialState,action: Destinatio
         case DestinationsValuesActionTypes.FETCH_DESTINATIONS_VALUES:
             return {...state,fetch_loading_destinations_values:true}
         case DestinationsValuesActionTypes.FETCH_DESTINATIONS_VALUES_SUCCESS:
+            console.log('payload',action.payload)
             return {...state,fetch_loading_destinations_values: false,destinationValues: action.payload}
         case DestinationsValuesActionTypes.FETCH_DESTINATIONS_VALUES_ERROR:
             return {...state,fetch_loading_destinations_values: false,fetch_error_destinations_values: action.payload}

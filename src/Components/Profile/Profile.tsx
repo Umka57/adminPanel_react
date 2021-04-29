@@ -123,12 +123,23 @@ const UserCard: React.FC = () =>  {
 
 export default function Profile(){
         const {id} = useParams<any>()
+
+        const {destinations} = useTypedSelector( state => state.destinations)
+        const {destinationValues} = useTypedSelector(state => state.destinationsValues)
         const {fetchDestinations,fetchDestinationsValues} = useActions()
 
         useEffect( ()=> {
             fetchDestinations(id)
-            fetchDestinationsValues(id)
-        },[])
+            console.log('id',id)
+        },[id])
+
+        useEffect(()=>{
+            if(destinations.length && !destinationValues.length && id){
+                let destfil = destinations.filter(dest => dest.user == id).map(item => item.id)
+
+                fetchDestinationsValues(destfil)
+            }
+        },[id,destinations.length,destinationValues.length])
 
         return (
             <Grid container spacing={3}>

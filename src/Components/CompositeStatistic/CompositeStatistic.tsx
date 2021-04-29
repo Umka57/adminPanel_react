@@ -82,7 +82,7 @@ export default function CompositeStatistic() {
     console.log(param)
 
     useEffect(() => {
-       param.map(elem => fetchDestinations(elem.id), destinations.map(dest =>fetchDestinationsValues(dest.id)))
+       //param.map(elem => fetchDestinations(elem.id), destinations.map(dest =>fetchDestinationsValues(dest.id)))
     }, [])
 
     // @ts-ignore
