@@ -11,9 +11,14 @@ export function KPEDynamicTableQuarter(props:any) {
     const concreteDestination = destinations.filter(dest => dest.user == props.userId)
 
     const [state,setstate] = useState({})
+
     useEffect(()=>{
-        setstate({})
-    },[concreteDestination.length,destinationValues.length])
+        setTimeout(() => setstate({}),1000)
+        return () => {
+            //Очистить данные
+        }
+    },[props.id])
+
     console.log('concreteDestination',concreteDestination)
     console.log("values",destinationValues)
     console.log("state",state)

@@ -84,7 +84,7 @@ const UserCard: React.FC = () =>  {
     useEffect(()=> {
         fetchPositions()
         fetchUser(id)
-    },[])
+    },[id])
 
     if(!user) return null
 
