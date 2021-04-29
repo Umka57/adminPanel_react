@@ -4,12 +4,13 @@ import {useTypedSelector} from "../../Hooks/useTypeSelector";
 import {useActions} from "../../Hooks/useActions";
 import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
 import css from "../Profile/Profile.module.css";
-
+import {User} from "../../Types/user"
 //Импорт графиков
 import {KPEDynamicTableQuarter} from "../Charts/KPEDynamicTableQuarter"
 import {KPETableCurrentDate} from "../Charts/KPETableCurrentDate"
 import {fetchDestinations} from "../../Store/ActionCreator/destinations";
 import {fetchDestinationsValues} from "../../Store/ActionCreator/destinationsValues";
+import Users from "../UsersPage/UsersPage";
 
 function AdvancedUserCard(props: any) {
 
@@ -64,24 +65,28 @@ export default function CompositeStatistic() {
 
     const {fetchUser} = useActions()
 
+    let param = prorectors
+    let userList = Array()
+
+    switch (usertype) {
+        case 'structure':
+            param = structure
+            break;
+        case 'university':
+            param = university
+            break;
+    }
+
     useEffect(() => {
-        if (usertype === 'prorector') {
-            let userList = prorectors.map(elem => {
-                fetchUser(elem.id),fetchDestinations(elem.id),destinations.map(dest=>fetchDestinationsValues(dest.id))
-            })
-        } else if (usertype === 'structure') {
-            let userList = structure.map(elem => {
-                fetchUser(elem.id),fetchDestinations(elem.id),destinations.map(dest=>fetchDestinationsValues(dest.id))
-            })
-        } else if (usertype === 'university') {
-            let userList = university.map(elem => {
-                fetchUser(elem.id),fetchDestinations(elem.id),destinations.map(dest=>fetchDestinationsValues(dest.id))
-            })
-        }
+       userList = param.map(elem => {
+            return fetchUser(elem.id), fetchDestinations(elem.id), destinations.map(dest => fetchDestinationsValues(dest.id))
+        })
     }, [])
 
+    // @ts-ignore
     return (
-        <div></div>
-        /*{userList.map(user => <AdvancedUserCard userId={user.id}>)}*/
+        <div>
+        {userList.map(user => <div userId={user.id}/>)}
+        </div>
     );
 }

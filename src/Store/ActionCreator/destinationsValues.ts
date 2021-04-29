@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import axios from "axios";
 import {DestinationsValuesAction, DestinationsValuesActionTypes} from "../../Types/destinationValues";
 
-export const fetchDestinationsValues = (id = null) => {
+export const fetchDestinationsValues = (id:any = null) => {
     return async (dispatch: Dispatch<DestinationsValuesAction>) => {
         try {
             dispatch({type: DestinationsValuesActionTypes.FETCH_DESTINATIONS_VALUES})
