@@ -45,15 +45,21 @@ export function KPEDynamicTableQuarter(props:any) {
 
     return (
         <Chart chartType="AreaChart"
-               width={400}
-               height={400}
+               width={600}
+               height={600}
                loader={<div>Loading chart</div>}
                data={
                    data
                }
                options={{
+                   isStacked: false,
                    title: 'Динамика выполнения КПЭ',
-                   chartArea: {width: '100%'}
+                   vAxis: {
+                       minValue: 0,
+                       maxValue: 100,
+                       ticks: [0, 20, 50, 80, 100],
+                   },
+                   chartArea: { width: '50%', height: '60%' }
                }}
                legendToggle
         />

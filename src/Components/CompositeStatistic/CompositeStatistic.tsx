@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {useTypedSelector} from "../../Hooks/useTypeSelector";
 import {useActions} from "../../Hooks/useActions";
 import {Card, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
-import css from "../Profile/Profile.module.css";
+import css from "./CompositeStatistic.module.css";
 import {User} from "../../Types/user"
 //Импорт графиков
 import {KPEDynamicTableQuarter} from "../Charts/KPEDynamicTableQuarter"
@@ -79,10 +79,10 @@ export default function CompositeStatistic() {
             param = university
             break;
     }
-    console.log(param)
 
     useEffect(() => {
-       //param.map(elem => fetchDestinations(elem.id), destinations.map(dest =>fetchDestinationsValues(dest.id)))
+       param.map(elem => (fetchDestinations(elem.id),
+           fetchDestinationsValues(destinations.filter(dest => dest.user == elem.id).map(item => item.id))))
     }, [])
 
     // @ts-ignore

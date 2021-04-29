@@ -1,0 +1,32 @@
+.card{
+    padding: 25px;
+    margin: 20px;
+    width: 80%;
+    background-color: lightgray;
+}
+.photo{
+    margin: 0;
+    width: 200px;
+    height: 200px;
+    padding: 40px;
+    border-radius: 5px;
+}
+.content{
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.button {
+    backgroundColor: green[500]
+}
+.button:hover {
+    backgroundColor: green[700]
+}
+.graphs{
+    width: 80%;
+    display: inline-flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}

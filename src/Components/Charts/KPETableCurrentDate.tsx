@@ -1,8 +1,7 @@
 import React, {useEffect} from "react";
-import {useParams} from "react-router-dom";
 import {useTypedSelector} from "../../Hooks/useTypeSelector";
-import {useActions} from "../../Hooks/useActions";
 import Chart from "react-google-charts";
+import css from "./chartsStyle.module.css"
 
 export function KPETableCurrentDate(props:any){
 
@@ -13,18 +12,18 @@ export function KPETableCurrentDate(props:any){
     let data = [["Неделя","Значение"],...concreteDestination.map(destination => ([destination.name,destination.percent_completion]))]
 
     return (
-        <Chart chartType={"ColumnChart"}
-               width={400}
-               height={400}
+        <Chart chartType={"ColumnChart"} className={css.columnChart}
+               width={600}
+               height={600}
                loader={<div>Loading chart</div>}
-               data={
-                   data
-               }
+               data={ data }
                options={{
+                   hAxis: { title: 'Назначение', titleTextStyle: { color: '#333',size: '14px' } },
+                   vAxis: { title: "%", minValue: 0, maxValue: 100},
                    title: 'Выполнение КПЭ(на текущую дату)',
-                   chartArea: {width: '100%'}
+                   titleTextStyle: {},
+                   chartArea: {width: '60%',height: '60%'}
                }}
-               legendToggle
         />
     );
 }

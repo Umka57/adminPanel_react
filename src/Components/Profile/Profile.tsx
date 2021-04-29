@@ -7,7 +7,7 @@ import {
     CardContent,
     CardMedia,
     Grid,
-    Typography, Button,
+    Typography, Button, Theme,
 } from "@material-ui/core";
 import {DataGrid, GridColDef} from "@material-ui/data-grid";
 import AddIcon from '@material-ui/icons/Add';
@@ -23,6 +23,7 @@ import {fetchPositions} from "../../Store/ActionCreator/positions";
 //Импорт графиков
 import {KPEDynamicTableQuarter} from "../Charts/KPEDynamicTableQuarter"
 import {KPETableCurrentDate} from "../Charts/KPETableCurrentDate"
+import {createStyles, makeStyles} from "@material-ui/styles";
 
 const DestinationsTable: React.FC =()=>{
     const {id} = useParams<any>()
@@ -89,35 +90,19 @@ const UserCard: React.FC = () =>  {
     if(!user) return null
 
     return (
+        <div>
         <Card className={css.card}>
-            <Grid container spacing={3}>
-                <Grid item>
-                    <CardMedia className={css.photo}
-                               image={user.img_link}/>
-                </Grid>
-                <div className={css.details}>
-                    <CardContent>
-                        <Grid item xl={6}>
-                            <Typography  className={css.position} variant='h4' component='h1'>{positions[user.position].position_name}</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography>{user.lastname} {user.name} {user.patronymic}</Typography>
-                        </Grid>
-                        <Grid item xl={6}>
-                            <Typography>Интегральное значение</Typography>
-                            <Typography>40%</Typography>
-                        </Grid>
-                        <Grid item xl={6}>
-                            <Typography>Исполнительная дисциплина</Typography>
-                            <Typography>20%</Typography>
-                        </Grid>
-                    </CardContent>
-                </div>
-                <div>
-                    {/*<DestinationsTable/>*/}
-                </div>
-            </Grid>
+            <CardMedia className={css.photo} image={user.img_link}/>
+            <CardContent className={css.content}>
+                <Typography variant='h4' component='h1'>{positions[user.position].position_name}</Typography>
+                <Typography>{user.lastname} {user.name} {user.patronymic}</Typography>
+                <Typography>Интегральное значение</Typography>
+                <Typography>40%</Typography>
+                <Typography>Исполнительная дисциплина</Typography>
+                <Typography>20%</Typography>
+            </CardContent>
         </Card>
+        </div>
     );
 }
 
@@ -142,17 +127,13 @@ export default function Profile(){
         },[id,destinations.length,destinationValues.length])
 
         return (
-            <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <UserCard/>
-                </Grid>
-                <Grid item xs={6}>
-                    <KPETableCurrentDate userId={id}/>
-                </Grid>
-                <Grid item xs={6}>
-                    <KPEDynamicTableQuarter userId={id}/>
-                </Grid>
-            </Grid>
+            <>
+            <UserCard/>
+            <div className={css.graphs}>
+                <KPETableCurrentDate userId={id}/>
+                <KPEDynamicTableQuarter userId={id}/>
+            </div>
+            </>
         )
 
 }
