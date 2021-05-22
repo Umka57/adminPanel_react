@@ -130,8 +130,8 @@ export default function Profile(){
             <>
             <UserCard/>
             <div className={css.graphs}>
-                <KPETableCurrentDate userId={id}/>
-                <KPEDynamicTableQuarter userId={id}/>
+                <KPETableCurrentDate userId={id} width={600} height={600}/>
+                <KPEDynamicTableQuarter userId={id} width={600} height={600}/>
             </div>
             </>
         )

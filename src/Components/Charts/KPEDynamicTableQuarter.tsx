@@ -19,10 +19,6 @@ export function KPEDynamicTableQuarter(props:any) {
         }
     },[props.id])
 
-    console.log('concreteDestination',concreteDestination)
-    console.log("values",destinationValues)
-    console.log("state",state)
-
     const result:any = {}
 
     const mapDynamicDataKPI = concreteDestination
@@ -37,21 +33,19 @@ export function KPEDynamicTableQuarter(props:any) {
             if (!result[key]) result[key] = [key, value];
             else result[key] = [...result[key], value]
         })
-    console.log('result',result)
         let data = [
         ['Неделя',...concreteDestination.flatMap(destination=>destination.name)], ...Object.keys(result).map(key => result[key])]
 
-    console.log('data',data)
-
     return (
         <Chart chartType="AreaChart"
-               width={600}
-               height={600}
+               width={props.height}
+               height={props.height}
                loader={<div>Loading chart</div>}
                data={
                    data
                }
                options={{
+                   legend: {position: 'bottom', maxLines: 4 },
                    isStacked: false,
                    title: 'Динамика выполнения КПЭ',
                    vAxis: {
@@ -59,7 +53,7 @@ export function KPEDynamicTableQuarter(props:any) {
                        maxValue: 100,
                        ticks: [0, 20, 50, 80, 100],
                    },
-                   chartArea: { width: '50%', height: '60%' }
+                   chartArea: { width: '75%', height: '80%' }
                }}
                legendToggle
         />

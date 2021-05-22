@@ -9,15 +9,12 @@ import CompositeStatistic from "./Components/CompositeStatistic/CompositeStatist
 
 function App() {
     return (
-        <Provider store={store}>
         <BrowserRouter>
             <Header/>
-            {/*<Route path='/main' component={}/>*/}
             <Route path='/users' component={Users}/>
             <Route path='/user/:id' component={Profile}/>
             <Route path='/statistic/:usertype' component={CompositeStatistic}/>
         </BrowserRouter>
-        </Provider>
 );
 }
 

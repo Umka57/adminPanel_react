@@ -32,7 +32,7 @@ const UniverMenu: React.FC = () => {
         setOpen(false);
     };
 
-    const {university,loading,error} = useTypedSelector(state => state.university)
+    const {university} = useTypedSelector(state => state.university)
     const {fetchUniversity} = useActions()
     const param = 'university'
 
@@ -46,7 +46,7 @@ const UniverMenu: React.FC = () => {
                 <Button className={css.menu__navlink}>
                     <NavLink
                         className={css.navlink}
-                        to={`/university/${param}`}>
+                        to={`/statistic/${param}`}>
                         Университеты
                     </NavLink>
                 </Button>
