@@ -22,7 +22,7 @@ def sign_in():
     except:
         return format_exc(), 500
 
-    password_hash = md5(get_auth_salt() + "\:/" + inputData.password)
+    password_hash = md5(get_auth_salt() + "\:/" + inputData.access_token)
 
     user = get_or_none(User, login=inputData.login, access_token=password_hash)
 
