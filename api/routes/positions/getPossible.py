@@ -1,9 +1,11 @@
-from . import routes
-from database import *
 from traceback import format_exc
 
+from database.database_models import Position
 
-@routes.route("/positions.getPossible", methods=["GET", "POST"])
+from routes import routes
+
+
+@routes.route("/positions.getPossible", methods=["GET"])
 def positions_get_possible():
     try:
         data = Position.select()
