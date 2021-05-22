@@ -1,13 +1,14 @@
 import {combineReducers} from "redux";
 import {usersReducer} from "./usersReducer";
 import {destinationsReducer} from "./destinationsReducer";
-import {prorectorsReducer} from "./prorectorsReducer";
-import {structureReducer} from "./structureReducer";
+import {prorectorsReducer} from "./usersReducer";
+import {structureReducer} from "./usersReducer";
 import {rolesReducer} from "./rolesReducer"
 import {positionsReducer} from "./positionsReducer";
 import {singleUserReducer} from "./singleUserReducer";
-import {universityReducer} from "./universityReducer";
+import {universityReducer} from "./usersReducer";
 import {destinationsValuesReducer} from "./destinationsValuesReducer";
+import {loginReducer} from "./loginReducer";
 
 export const rootReducer = combineReducers({
     users: usersReducer,
@@ -18,7 +19,8 @@ export const rootReducer = combineReducers({
     positions: positionsReducer,
     user: singleUserReducer,
     university: universityReducer,
-    destinationsValues: destinationsValuesReducer
+    destinationsValues: destinationsValuesReducer,
+    login : loginReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

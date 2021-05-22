@@ -1,5 +1,4 @@
 import {Dispatch} from "redux";
-import {destinationsGetPossible} from "../../api";
 import {DestinationsAction, DestinationsActionTypes} from "../../Types/destinations";
 import axios from "axios";
 

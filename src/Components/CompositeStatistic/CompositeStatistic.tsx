@@ -11,6 +11,7 @@ import {KPETableCurrentDate} from "../Charts/KPETableCurrentDate"
 import {fetchDestinations} from "../../Store/ActionCreator/destinations";
 import {fetchDestinationsValues} from "../../Store/ActionCreator/destinationsValues";
 import Users from "../UsersPage/UsersPage";
+import {render} from "react-dom";
 
 function AdvancedUserCard(props: any) {
 
@@ -22,34 +23,22 @@ function AdvancedUserCard(props: any) {
     if (!selectedUser) return null
 
     return (
-        <Card>
-            <Grid container spacing={3}>
-                <Grid item>
-                    <CardMedia className={css.photo}
-                               image={selectedUser.img_link}/>
-                </Grid>
-                <div className={css.details}>
-                    <CardContent>
-                        <Grid item xl={6}>
-                            <Typography className={css.position} variant='h4'
-                                        component='h1'>{positions[selectedUser.position].position_name}</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Typography>{selectedUser.lastname} {selectedUser.name} {selectedUser.patronymic}</Typography>
-                        </Grid>
-                        <Grid item xl={6}>
-                            <Typography>Интегральное значение</Typography>
-                            <Typography>40%</Typography>
-                        </Grid>
-                        <Grid item xl={6}>
-                            <Typography>Исполнительная дисциплина</Typography>
-                            <Typography>20%</Typography>
-                        </Grid>
-                        <KPETableCurrentDate userId={selectedUser.id}/>
-                        <KPEDynamicTableQuarter userId={selectedUser.id}/>
-                    </CardContent>
+        <Card className={css.card}>
+            <CardMedia className={css.photo} image={selectedUser.img_link}/>
+            <CardContent>
+                <div className={css.content}>
+                    <Typography variant='h4' component='h1'>{positions[selectedUser.position].position_name}</Typography>
+                    <Typography>{selectedUser.lastname} {selectedUser.name} {selectedUser.patronymic}</Typography>
+                    <Typography>Интегральное значение</Typography>
+                    <Typography>40%</Typography>
+                    <Typography>Исполнительная дисциплина</Typography>
+                    <Typography>20%</Typography>
                 </div>
-            </Grid>
+                <div className={css.graphs}>
+                    <KPETableCurrentDate userId={props.userId} width={200} height={200}/>
+                    <KPEDynamicTableQuarter userId={props.userId} width={200} height={200}/>
+                </div>
+            </CardContent>
         </Card>
     );
 }
@@ -58,11 +47,13 @@ export default function CompositeStatistic() {
 
     const {usertype} = useParams<any>()
 
+    const {users} = useTypedSelector(state => state.users)
     const {prorectors} = useTypedSelector(state => state.prorectors)
     const {structure} = useTypedSelector(state => state.structure)
     const {university} = useTypedSelector(state => state.university)
+
     const {destinations} = useTypedSelector(state => state.destinations)
-    const {users} = useTypedSelector(state => state.users)
+    const {destinationValues} = useTypedSelector(state => state.destinationsValues)
 
     const {fetchUser} = useActions()
 
@@ -81,14 +72,31 @@ export default function CompositeStatistic() {
     }
 
     useEffect(() => {
-       param.map(elem => (fetchDestinations(elem.id),
+       param.map(elem => (
+           fetchDestinations(elem.id),
            fetchDestinationsValues(destinations.filter(dest => dest.user == elem.id).map(item => item.id))))
-    }, [])
+    }, [usertype])
 
     // @ts-ignore
     return (
         <div>
-        {param.map(user => <AdvancedUserCard userId={user.id}/>)}
+        {param.map(selectedUser => <Card key={selectedUser.id} className={css.card}>
+            <CardMedia className={css.photo} image={selectedUser.img_link ? selectedUser.img_link : "http://www.churchnb.org/wp-content/uploads/No.jpg"}/>
+            <CardContent>
+                <div className={css.content}>
+                    <Typography variant='h3' component='h1'>{"добавить позицию"}</Typography>
+                    <Typography variant={'h4'} component={'h2'}>{selectedUser.lastname} {selectedUser.name} {selectedUser.patronymic}</Typography>
+                    <Typography>Интегральное значение</Typography>
+                    <Typography>40%</Typography>
+                    <Typography>Исполнительная дисциплина</Typography>
+                    <Typography>20%</Typography>
+                </div>
+                <div className={css.graphs}>
+                    <KPETableCurrentDate userId={selectedUser.id} width={300} height={200}/>
+                    <KPEDynamicTableQuarter userId={selectedUser.id} width={300} height={200}/>
+                </div>
+            </CardContent>
+        </Card>)}
         </div>
     );
 }

@@ -31,7 +31,7 @@ const ProsMenu: React.FC = () => {
         setOpen(false);
     };
 
-    const {prorectors,loading,error} = useTypedSelector(state => state.prorectors)
+    const {prorectors} = useTypedSelector(state => state.prorectors)
     const {fetchProrectors} = useActions()
     const param = 'prorectors'
 

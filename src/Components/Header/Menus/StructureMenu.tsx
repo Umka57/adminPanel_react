@@ -31,7 +31,7 @@ const StrMenu: React.FC = () => {
         setOpen(false);
     };
 
-    const {structure,loading,error} = useTypedSelector(state => state.structure)
+    const {structure} = useTypedSelector(state => state.structure)
     const {fetchStructure} = useActions()
     const param = 'structure'
 

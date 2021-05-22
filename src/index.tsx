@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import SignIn from "./Components/Login/LoginPage";
+import {Provider} from "react-redux";
+import {store} from "./Store";
+import App from "./App";
 
 ReactDOM.render(
-    <App />,
+    <SignIn/>,
   document.getElementById('root')
 );

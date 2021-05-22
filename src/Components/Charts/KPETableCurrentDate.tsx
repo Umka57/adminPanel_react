@@ -5,7 +5,7 @@ import css from "./chartsStyle.module.css"
 
 export function KPETableCurrentDate(props:any){
 
-    const {destinations,fetch_loading_destination,fetch_error_destination} = useTypedSelector(state => state.destinations)
+    const {destinations} = useTypedSelector(state => state.destinations)
 
     const concreteDestination = destinations.filter(dest => dest.user == props.userId)
 
@@ -13,16 +13,17 @@ export function KPETableCurrentDate(props:any){
 
     return (
         <Chart chartType={"ColumnChart"} className={css.columnChart}
-               width={600}
-               height={600}
+               width={props.width}
+               height={props.height}
                loader={<div>Loading chart</div>}
                data={ data }
                options={{
+                   legend: {position: 'bottom',maxLines: 4},
                    hAxis: { title: 'Назначение', titleTextStyle: { color: '#333',size: '14px' } },
                    vAxis: { title: "%", minValue: 0, maxValue: 100},
                    title: 'Выполнение КПЭ(на текущую дату)',
                    titleTextStyle: {},
-                   chartArea: {width: '60%',height: '60%'}
+                   chartArea: {width: '75%',height: '80%'}
                }}
         />
     );
