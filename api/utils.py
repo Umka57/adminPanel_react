@@ -60,7 +60,7 @@ def get_is_auth(access_token: str) -> bool:
     if not session:
         return False
 
-    elif not (session.session_token_date_end - datetime.now()).total_seconds():
+    elif (session.session_token_date_end - datetime.now()).total_seconds() < 0:
         session.delete_instance()
 
         return False
@@ -72,8 +72,10 @@ def run_is_auth(func):
     def wrapper(*args, **kwargs):
         from flask import request
 
-        if not ("access_token" in request.cookies):
-            return ERROR(True, "Пользователь не авторизован")._asdict()
+        if not ("access_token" in request.cookies) or (
+            not get_is_auth(request.cookies["access_token"])
+        ):
+            return ERROR(True, "Пользователь не авторизован")._asdict(), 200
 
         return func(*args, **kwargs)
 
@@ -85,9 +87,7 @@ def run_is_not_auth(func):
         from flask import request
 
         if "access_token" in request.cookies:
-            is_auth = get_is_auth(request.cookies["access_token"])
-
-            return ERROR(True, "Пользователь уже авторизован")._asdict()
+            return ERROR(True, "Пользователь уже авторизован")._asdict(), 200
 
         return func(*args, **kwargs)
 
