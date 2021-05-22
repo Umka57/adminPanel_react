@@ -1,9 +1,9 @@
-from . import routes
-from database import *
+from routes import routes
+from database.database_models import Role
 from traceback import format_exc
 
 
-@routes.route("/roles.getPossible", methods=["GET", "POST"])
+@routes.route("/roles.getPossible", methods=["GET"])
 def roles_get_possible():
     try:
         data = Role.select()
@@ -18,6 +18,6 @@ def roles_get_possible():
 
         return return_data, 200
 
-    except Exception as e:
+    except Exception:
 
         return format_exc(), 500

@@ -1,0 +1,180 @@
+{
+    "mqm-metrics": {
+        "id": "test-holistic-1",
+        "version": "0.1",
+        "mqm-version": "0.9",
+        "name": "Holistic Test Model 1",
+        "description": "MQM Core issue types extended by \"pattern-problem\" with MQM recommended/default severities, weights and multipliers",
+        "params": {
+            "locale": "",
+            "domain": "",
+            "terminology": "",
+            "text-type": "",
+            "audience": "",
+            "purpose": "",
+            "register": "",
+            "style": "",
+            "content-correspondence": "",
+            "output-modality": "",
+            "file-format": "",
+            "production-technology": ""
+        },
+        "_comment_": "\"pattern-problem\" type (not in MQM Core) added to count issues from qaSession.exe which Core types ignore",
+        "holistics": [
+            {
+                "_comment_": "child objects may have own \"weight\", \"threshold\", \"selectable\", \"fullBranch\" - otherwise they inherit these props from the parent",
+                "applyTo": [
+                    "segment"
+                ],
+                "weight": 100.0,
+                "threshold": 71.0,
+                "selectable": false,
+                "fullBranch": true,
+                "name": "Adequacy-Fluency",
+                "gradeTypes": {
+                    "overall": {
+                        "name": "",
+                        "manual": false,
+                        "applyTo": [
+                            "run"
+                        ],
+                        "default": true,
+                        "formula": null,
+                        "params": null,
+                        "grades": {
+                            "Good": {
+                                "thresholds": {
+                                    "min": 3.5,
+                                    "includeMin": true
+                                },
+                                "color": "#14892c"
+                            },
+                            "Satisfactory": {
+                                "thresholds": {
+                                    "min": 3,
+                                    "includeMin": true
+                                },
+                                "color": "#f6c342"
+                            },
+                            "Fair": {
+                                "thresholds": {
+                                    "min": 2,
+                                    "includeMin": true
+                                },
+                                "color": "#f79232"
+                            },
+                            "Poor": {
+                                "thresholds": {
+                                    "min": 0,
+                                    "includeMin": true
+                                },
+                                "color": "#d04437"
+                            }
+                        }
+                    }
+                },
+                "types": {
+                    "fluency": {
+                        "parent": null,
+                        "mqm_cq_path": "03",
+                        "selectable": true,
+                        "weight": 1.0,
+                        "name": "Fluency",
+                        "description": "To what extent is a translation grammatically well formed, without spelling errors and experienced as natural language by a native speaker?"
+                    },
+                    "accuracy": {
+                        "parent": null,
+                        "mqm_cq_path": "01",
+                        "selectable": true,
+                        "weight": 1.0,
+                        "name": "Adequacy",
+                        "description": "How much of the meaning expressed in the source is also expressed in the translation?"
+                    }
+                },
+                "rating": {
+                    "mandatoryPercent": 0,
+                    "min": 1,
+                    "max": 4,
+                    "step": 1,
+                    "labels": [
+                        {
+                            "names": {
+                                "fluency": "Incomprehensible",
+                                "accuracy": "None"
+                            },
+                            "descriptions": {
+                                "fluency": "",
+                                "accuracy": ""
+                            },
+                            "value": 1
+                        },
+                        {
+                            "names": {
+                                "fluency": "Dis-fluent",
+                                "accuracy": "Little"
+                            },
+                            "descriptions": {
+                                "fluency": "",
+                                "accuracy": ""
+                            },
+                            "value": 2
+                        },
+                        {
+                            "names": {
+                                "fluency": "Good",
+                                "accuracy": "Most"
+                            },
+                            "descriptions": {
+                                "fluency": "",
+                                "accuracy": ""
+                            },
+                            "value": 3
+                        },
+                        {
+                            "names": {
+                                "fluency": "Flawless",
+                                "accuracy": "Everything"
+                            },
+                            "descriptions": {
+                                "fluency": "",
+                                "accuracy": ""
+                            },
+                            "value": 4
+                        }
+                    ],
+                    "render": {
+                        "type": "ratingBar",
+                        "params": {
+                            "emptyFaIcon": "fa-circle-o",
+                            "emptyIconColor": "#979797",
+                            "filledFaIcon": "fa-circle",
+                            "filledIconColor": "#3AA3FD",
+                            "showLabel": true,
+                            "labelColor": "#3AA3FD",
+                            "showValue": true,
+                            "valueColor": "#3AA3FD",
+                            "typesColors": {
+                                "fluency": "#d9e5fb",
+                                "accuracy": "#f9e5e5"
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "severities": {
+            "none": {
+                "multiplier": 0
+            },
+            "minor": {
+                "multiplier": 1
+            },
+            "major": {
+                "multiplier": 10
+            },
+            "critical": {
+                "multiplier": 100
+            }
+        }
+    }
+}

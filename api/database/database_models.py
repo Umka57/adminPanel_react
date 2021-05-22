@@ -1,16 +1,14 @@
-from re import L
 from peewee import (
+    AutoField,
     BooleanField,
     CharField,
+    DateTimeField,
     FloatField,
     ForeignKeyField,
-    PostgresqlDatabase,
-    Model,
     IntegerField,
-    AutoField,
+    Model,
+    PostgresqlDatabase,
 )
-
-from playhouse.sqlite_ext import JSONField
 from utils import config_get_params
 
 _name, _host, _port, _user, _password = config_get_params(
@@ -57,6 +55,17 @@ class User(BaseModel):
     role = ForeignKeyField(Role, on_delete="RESTRICT", null=True)
     img_link = CharField(max_length=256, null=True)
     img_is_local = BooleanField()
+    login = CharField(max_length=64)
+    access_token = CharField(max_length=64)
+
+
+# * Модель авторизации
+class UserSessions(BaseModel):
+    user = ForeignKeyField(
+        User, to_field="id", on_delete="CASCADE", on_update="CASCADE"
+    )
+    session_token = CharField(max_length=64, primary_key=True)
+    session_token_date_end = DateTimeField(default="now()")
 
 
 class VerificationType(BaseModel):
@@ -89,11 +98,11 @@ class KPI(BaseModel):
     percent_completion = FloatField()
 
 
-# * Инициализация таблиц базы данных
 if database:
     Position.create_table(True)
     Role.create_table(True)
     User.create_table(True)
+    UserSessions.create_table(True)
     VerificationType.create_table(True)
     Destination.create_table(True)
     DestinationValues.create_table(True)

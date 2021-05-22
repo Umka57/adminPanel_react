@@ -6,3 +6,4 @@ from .destinations import *
 from .positions import *
 from .roles import *
 from .users import *
+from .auth import *
