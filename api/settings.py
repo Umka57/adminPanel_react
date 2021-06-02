@@ -5,6 +5,8 @@ from pydantic.class_validators import root_validator
 CONFIG_PATH = "./config.json"
 
 ERROR = namedtuple("REST_API_ERROR", "eror error_message")
+ANSWER = namedtuple("REST_API_ANSWER", "response")
+ANSWER_DATA = namedtuple("REST_API_ANSWER_DATA", "items count")
 
 ProfilePageUserData = namedtuple(
     "ProfilePageUserData", "id first_name second_name patronymic is_admin position"

@@ -1,4 +1,5 @@
 from json import dumps
+from settings import ANSWER, ANSWER_DATA
 from traceback import format_exc
 
 from database.database_models import Destination
@@ -19,17 +20,12 @@ def destinations_get_possible():
         return format_exc(), 500
 
     try:
-        data = Destination.select().where(Destination.user == inputData.user_id)
+        destinations = Destination.select().where(Destination.user == inputData.user_id)
 
-        return_data = {"count": len(data)}
-        respone = []
+        count = len(destinations)
+        items = [destination.__dict__["__data__"] for destination in destinations]
 
-        for destination in data:
-            respone.append(destination.__dict__["__data__"])
-
-        return_data.update(dict(response=respone))
-
-        return return_data, 200
+        return ANSWER(ANSWER_DATA(items=items, count=count)._asdict())._asdict(), 200
 
     except:
         return format_exc(), 500

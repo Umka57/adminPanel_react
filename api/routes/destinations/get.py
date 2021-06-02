@@ -1,4 +1,6 @@
+from database.database_methods import get_or_none
 from json import dumps
+from settings import ANSWER, ANSWER_DATA, ERROR
 from traceback import format_exc
 
 from database.database_models import Destination
@@ -18,15 +20,15 @@ def destinations_get():
     except:
         return format_exc(), 500
 
-    try:
-        tables = Destination.select().where(
-            (Destination.id == inputData.destination_id)
-        )
+    destination = get_or_none(Destination, id=inputData.destination_id)
 
-    except:
-        return format_exc(), 500
+    if not destination:
+        return ANSWER(ANSWER_DATA(list(), int())._asdict())._asdict(), 500
 
     try:
-        return dumps([i.__dict__["__data__"] for i in tables]), 200
+        items = destination.__dict__["__data__"]
+        count = len(items)
+
+        return ANSWER(ANSWER_DATA(items=items, count=count)._asdict())._asdict(), 200
     except:
         return format_exc(), 500
