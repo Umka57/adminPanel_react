@@ -7,6 +7,6 @@ import {store} from "./Store";
 import App from "./App";
 
 ReactDOM.render(
-    <SignIn/>,
+    <App/>,
   document.getElementById('root')
 );
