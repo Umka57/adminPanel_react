@@ -1,4 +1,5 @@
 from json import dumps
+from settings import ANSWER, ANSWER_DATA
 from traceback import format_exc
 from utils import run_is_auth
 
@@ -29,16 +30,14 @@ def users_get_possible():
             )
             & (True if not inputData.role_id else (User.role == inputData.role_id))
         )
-
-        return_data = {"count": len(data)}
-        respone = []
+        items = []
 
         for user in data:
-            respone.append(user.__dict__["__data__"])
+            items.append(user.__dict__["__data__"])
 
-        return_data.update(dict(response=respone))
+        count = len(items)
 
-        return return_data, 200
+        return ANSWER(ANSWER_DATA(items=items, count=count)._asdict())._asdict(), 200
 
     except Exception as e:
 

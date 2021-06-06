@@ -1,3 +1,4 @@
+from settings import ANSWER, ANSWER_DATA
 from utils import run_is_auth
 from routes import routes
 from database.database_models import Role
@@ -10,15 +11,14 @@ def roles_get_possible():
     try:
         data = Role.select()
 
-        return_data = {"count": len(data)}
-        respone = []
+        items = []
 
         for role in data:
-            respone.append(role.__dict__["__data__"])
+            items.append(role.__dict__["__data__"])
 
-        return_data.update(dict(response=respone))
+        count = len(items)
 
-        return return_data, 200
+        return ANSWER(ANSWER_DATA(items=items, count=count)._asdict())._asdict(), 200
 
     except Exception:
 
