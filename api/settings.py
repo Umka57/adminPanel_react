@@ -20,5 +20,5 @@ ProfilePageRectorData = namedtuple(
 
 ProfilePageData = namedtuple("ProfilePageData", "users rectors")
 
-ANSWER_ERROR = dict(response=0)
-ANSWER_RIGHT = dict(response=1)
+ANSWER_ERROR = dict(response=False)
+ANSWER_RIGHT = dict(response=True)
