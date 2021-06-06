@@ -1,5 +1,6 @@
 from json import dumps
 from traceback import format_exc
+from utils import run_is_auth
 
 from database.database_models import User
 from pydantic import ValidationError
@@ -8,7 +9,8 @@ from flask import request
 from routes import routes
 
 
-@routes.route("/users.getPossible", methods=["POST"])
+@routes.route("/users.getPossible", methods=["POST"], endpoint="users_getPossible")
+@run_is_auth
 def users_get_possible():
     try:
         _json = dumps(request.json)

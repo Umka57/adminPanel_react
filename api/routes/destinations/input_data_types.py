@@ -16,6 +16,7 @@ class DestinationsCreateInputData(BaseModel):
     verification_indicator_value: str = Field(
         max_length=200, alias="verificationIndicatorValue"
     )
+    verification_id: int = Field(alias="verificationId")
     year: int = Field()
     plan: str = Field(max_length=200)
     present_value: str = Field(max_length=500, alias="presentValue")

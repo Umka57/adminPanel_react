@@ -1,4 +1,5 @@
 from json import dumps
+from utils import run_is_auth
 from settings import ANSWER, ANSWER_DATA
 from traceback import format_exc
 
@@ -10,7 +11,10 @@ from routes import routes
 from .input_data_types import DestinationsGetPossibleInputData
 
 
-@routes.route("/destinations.getPossible", methods=["POST"])
+@routes.route(
+    "/destinations.getPossible", methods=["POST"], endpoint="destinations_getPossbile"
+)
+@run_is_auth
 def destinations_get_possible():
     try:
         inputData = DestinationsGetPossibleInputData.parse_raw(dumps(request.json))

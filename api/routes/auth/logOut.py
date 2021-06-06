@@ -1,3 +1,4 @@
+from settings import ANSWER_RIGHT
 from database.database_models import UserSessions
 from flask import make_response, request
 from routes import routes
@@ -14,7 +15,7 @@ def log_out():
     except:
         pass
 
-    response = make_response()
+    response = make_response(ANSWER_RIGHT)
 
     response.set_cookie("access_token", "", max_age=0)
 

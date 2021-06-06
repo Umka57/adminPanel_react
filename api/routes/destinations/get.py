@@ -9,9 +9,11 @@ from pydantic import ValidationError
 
 from routes import routes
 from .input_data_types import DestinationsGetInputData
+from utils import run_is_auth
 
 
-@routes.route("/destinations.get", methods=["POST"])
+@routes.route("/destinations.get", methods=["POST"], endpoint="destinations_get")
+@run_is_auth
 def destinations_get():
     try:
         inputData = DestinationsGetInputData.parse_raw(dumps(request.json))

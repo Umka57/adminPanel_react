@@ -1,5 +1,6 @@
 from json import dumps
 from traceback import format_exc
+from utils import run_is_auth
 
 from database.database_models import DestinationValues
 from flask import request
@@ -9,7 +10,10 @@ from routes import routes
 from .input_data_types import DestinationsGetInputData
 
 
-@routes.route("/destinations.getValues", methods=["POST"])
+@routes.route(
+    "/destinations.getValues", methods=["POST"], endpoint="destinations_getValues"
+)
+@run_is_auth
 def destinations_get_values():
     try:
         inputData = DestinationsGetInputData.parse_raw(dumps(request.json))

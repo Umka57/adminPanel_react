@@ -1,11 +1,15 @@
 from traceback import format_exc
+from utils import run_is_auth
 
 from database.database_models import Position
 
 from routes import routes
 
 
-@routes.route("/positions.getPossible", methods=["GET"])
+@routes.route(
+    "/positions.getPossible", methods=["GET"], endpoint="positions_getPossible"
+)
+@run_is_auth
 def positions_get_possible():
     try:
         data = Position.select()
