@@ -1,18 +1,23 @@
+from datetime import datetime, timedelta
+import uuid
+from copy import deepcopy
 from json import dumps
 from traceback import format_exc
-from utils import run_is_not_auth, md5, get_auth_salt
-from settings import ERROR
 
-from flask import request, make_response
-from pydantic import ValidationError
-from .input_data_types import AuthSignInInputData
-from database.database_models import User, UserSessions
+from flask.wrappers import Response
+
 from database.database_methods import get_or_none
+from database.database_models import User, UserSessions
+from flask import make_response, request
+from pydantic import ValidationError
 from routes import routes
-import uuid
+from settings import ERROR
+from utils import get_auth_salt, md5, run_is_not_auth
+
+from .input_data_types import AuthSignInInputData
 
 
-@routes.route("/auth.sign-in", methods=["POST"])
+@routes.route("/auth.sign-in", methods=["POST"], endpoint="sign_in")
 @run_is_not_auth
 def sign_in():
     try:
@@ -22,19 +27,28 @@ def sign_in():
     except:
         return format_exc(), 500
 
-    password_hash = md5(get_auth_salt() + "\:/" + inputData.password)
+    password_hash = md5(get_auth_salt() + "\:/" + inputData.access_token)
 
     user = get_or_none(User, login=inputData.login, access_token=password_hash)
 
     if not user:
-        return ERROR(True, "Пароль и/или Логин")._asdict()
+        return ERROR(True, "Пароль и/или Логин")._asdict(), 200
 
     uid = uuid.uuid1()
 
-    session = UserSessions.create(user=user, session_token=uid)
+    uid_life_time = timedelta(days=1)
+    uid_end_time = datetime.now() + uid_life_time
 
-    res = make_response("Setting a cookie")
+    UserSessions.create(
+        user=user, session_token=uid, session_token_date_end=uid_end_time
+    )
 
-    res.set_cookie("access_token", str(uid), max_age=60 * 60 * 24)
+    user_data = deepcopy(user.__dict__["__data__"])
 
-    return res
+    user_data.pop("access_token")
+
+    response = make_response(user_data)
+
+    response.set_cookie("access_token", str(uid), max_age=uid_life_time.total_seconds())
+
+    return response, 200

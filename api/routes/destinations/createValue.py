@@ -7,9 +7,13 @@ from pydantic import ValidationError
 
 from routes import routes
 from .input_data_types import DestinationsCreateValuesInputData
+from utils import run_is_auth
 
 
-@routes.route("/destinations.createValues", methods=["POST"])
+@routes.route(
+    "/destinations.createValue", methods=["POST"], endpoint="destinations_createValue"
+)
+@run_is_auth
 def destinations_create_values():
     try:
         inputData = DestinationsCreateValuesInputData.parse_raw(dumps(request.json))

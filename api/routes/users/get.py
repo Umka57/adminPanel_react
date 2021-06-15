@@ -7,9 +7,11 @@ from pydantic import ValidationError
 
 from routes import routes
 from .input_data_types import UsersGetInputData
+from utils import run_is_auth
 
 
-@routes.route("/users.get", methods=["POST"])
+@routes.route("/users.get", methods=["POST"], endpoint="users_get")
+@run_is_auth
 def users_get():
     try:
         inputData = UsersGetInputData.parse_raw(dumps(request.json))
