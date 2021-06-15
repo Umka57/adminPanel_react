@@ -51,15 +51,6 @@ const DestinationsTable: React.FC =()=>{
         { field: 'percent_completion', headerName: 'Процент выполнения', width: 130 },
     ];
 
-    /*let data = [destinations.map(destination => { return[
-            [destination.name],
-            [destination.performance_indicator],
-            [destination.verification_indicator_value],
-            [destination.verification],
-            [destination.plan],
-            [destination.present_value]]}),
-        destinationValues.map(destinationValue => {return [destinationValue.value]})
-        ]*/
     return (
         <div style={{ height: 400, width: '100%' }}>
             <DataGrid rows={[destinations,destinationValues]} columns={columns} />

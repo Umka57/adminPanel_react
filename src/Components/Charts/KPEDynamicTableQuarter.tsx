@@ -1,8 +1,6 @@
 import {useTypedSelector} from "../../Hooks/useTypeSelector";
 import Chart from "react-google-charts";
 import React, {useEffect, useState} from "react";
-import {useActions} from "../../Hooks/useActions";
-import {List} from "@material-ui/core";
 
 export function KPEDynamicTableQuarter(props:any) {
     const {destinations,fetch_loading_destination,fetch_error_destination} = useTypedSelector(state => state.destinations)
